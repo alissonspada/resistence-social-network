@@ -19,14 +19,13 @@ public class TradeRules {
     {
         UUID ownerSourceId = inventoryRepo.findById(sourceId).orElseThrow().getOwnerId();
         UUID ownerTargetId = inventoryRepo.findById(targetId).orElseThrow().getOwnerId();
+
         rebelRepo.findById(ownerSourceId).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("source is either a traitor or could not be found")
         );
-
         rebelRepo.findById(ownerTargetId).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("target is either a traitor or could not be found")
         );
-
         Item sourceItem = inventoryRepo.findItemByName(sourceId, sourceTrade.getName()).orElseThrow(
                 () -> new NoSuchElementException("no such item source")
         );
@@ -34,12 +33,12 @@ public class TradeRules {
                 () -> new NoSuchElementException("no such item target")
         );
 
-        if (sourceTrade.quantity * sourceTrade.price != targetTrade.quantity * targetTrade.price)
+        if (sourceTrade.getQuantity() * sourceTrade.getPrice() != targetTrade.getQuantity() * targetTrade.getPrice())
             throw new TradeFailureException("points do not match");
 
-        if (sourceItem.quantity < sourceTrade.quantity) {
+        if (sourceItem.getQuantity() < sourceTrade.getQuantity()) {
             throw new TradeFailureException("insufficient funds source");
-        } else if (targetItem.quantity < targetTrade.quantity) {
+        } else if (targetItem.getQuantity() < targetTrade.getQuantity()) {
             throw new TradeFailureException("insufficient funds target");
         }
 

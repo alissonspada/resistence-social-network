@@ -2,8 +2,8 @@ package org.example.model;
 
 public class Item {
     String name;
-    public Integer quantity;
-    public Integer price;
+    private Integer quantity;
+    private Integer price;
 
     public Item(String name, Integer quantity, Integer price) {
         this.name = name;
@@ -26,6 +26,14 @@ public class Item {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Integer getPrice() {
+        return price;
     }
 
     @Override

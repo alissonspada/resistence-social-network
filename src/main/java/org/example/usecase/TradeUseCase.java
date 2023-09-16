@@ -6,8 +6,9 @@ import org.example.repositories.RebelRepository;
 import org.example.rules.TradeFailureException;
 import org.example.rules.TradeRules;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class TradeUseCase {
@@ -18,25 +19,33 @@ public class TradeUseCase {
         this.rebelRepository = rebelRepository;
     }
 
-    public void trade(UUID sourceId, Item sourceTrade, UUID targetId, Item targetTrade) throws TradeFailureException {
-        TradeRules tradeRules = new TradeRules(inventoryRepository, rebelRepository);
-        List<Item> items = tradeRules.check(sourceId, sourceTrade, targetId, targetTrade);
+    public void trade(UUID sourceId, Item sourceTradeItem, UUID targetId, Item targetTradeItem) throws TradeFailureException {
+        List<Item> checkedTradeItems = new TradeRules(inventoryRepository, rebelRepository).check(sourceId, sourceTradeItem, targetId, targetTradeItem);
 
-        Item sourceItem = items.get(0);
-        Item targetItem = items.get(1);
+        Item sourceInventoryItem = checkedTradeItems.get(0);
+        Item targetInventoryItem = checkedTradeItems.get(1);
 
-        sourceItem.setQuantity(sourceItem.quantity - sourceTrade.quantity);
-        targetItem.setQuantity(targetItem.quantity - targetTrade.quantity);
+        sourceInventoryItem.setQuantity( sourceInventoryItem.getQuantity() - sourceTradeItem.getQuantity() );
+        targetInventoryItem.setQuantity( targetInventoryItem.getQuantity() - targetTradeItem.getQuantity() );
 
-        List<Item> sourceList =  inventoryRepository.findById(sourceId).get().getInvList();
-        List<Item> targetList = inventoryRepository.findById(targetId).get().getInvList();
+        tryWithDefault(sourceId, inventoryRepository, targetTradeItem);
+        tryWithDefault(targetId, inventoryRepository, sourceTradeItem);
+    }
 
-        Optional<Item> sameSourceItem = inventoryRepository.findItemByName(sourceId, targetTrade.getName());
-        if (sameSourceItem.isPresent()) sameSourceItem.get().setQuantity(sameSourceItem.get().quantity + targetTrade.quantity);
-        else sourceList.add(targetTrade);
 
-        Optional<Item> sameTargetItem = inventoryRepository.findItemByName(targetId, sourceTrade.getName());
-        if (sameTargetItem.isPresent()) sameTargetItem.get().setQuantity(sameTargetItem.get().quantity + sourceTrade.quantity);
-        else targetList.add(sourceTrade);
+    public void tryWithDefault(UUID id, InventoryRepository invRepo, Item sameNameTradeItem) {
+        List<Item> invList = new ArrayList<>();
+        try {
+            invList = invRepo.findById(id).orElseThrow().getInvList();
+            Item sameName = invList.stream().filter(i -> i.getName().equals( sameNameTradeItem.getName() )
+            ).findFirst().orElseThrow();
+
+            /* Try setting quantity to item if present */
+            sameName.setQuantity(sameName.getQuantity() + sameNameTradeItem.getQuantity());
+        } catch (NoSuchElementException ignored) {
+
+            /* Default: just add to list */
+            invList.add(sameNameTradeItem);
+        }
     }
 }
