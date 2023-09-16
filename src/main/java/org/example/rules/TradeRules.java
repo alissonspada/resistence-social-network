@@ -1,6 +1,7 @@
 package org.example.rules;
 
 import org.example.model.Item;
+import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 
@@ -14,17 +15,23 @@ public class TradeRules {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;
     }
-    public Item getDefaultItem() { return new Item("default", 0, 0); }
     public List<Item> check(UUID sourceId, Item sourceTrade, UUID targetId, Item targetTrade) throws TradeFailureException
     {
-        if (rebelRepo.findById(sourceId).orElseThrow().getReportCounter() >= 3)
-            throw new TradeFailureException("source traitor");
-        if (rebelRepo.findById(targetId).orElseThrow().getReportCounter() >= 3)
-            throw new TradeFailureException("target traitor");
+        UUID ownerSourceId = inventoryRepo.findById(sourceId).orElseThrow().getOwnerId();
+        UUID ownerTargetId = inventoryRepo.findById(targetId).orElseThrow().getOwnerId();
+        rebelRepo.findById(ownerSourceId).filter(Rebel::isNotTraitor).orElseThrow();
 
-        Item sourceItem = inventoryRepo.findItemByName(sourceId, sourceTrade.getName()).orElseGet(this::getDefaultItem);
-        Item targetItem = inventoryRepo.findItemByName(targetId, targetTrade.getName()).orElseGet(this::getDefaultItem);
-        if (sourceTrade.quantity * sourceTrade.price != targetTrade.quantity * targetTrade.price) throw new TradeFailureException("points do not match");
+        rebelRepo.findById(ownerTargetId).filter(Rebel::isNotTraitor).orElseThrow();
+
+        Item sourceItem = inventoryRepo.findItemByName(sourceId, sourceTrade.getName()).orElseThrow(
+                () -> new NoSuchElementException("no such item source")
+        );
+        Item targetItem = inventoryRepo.findItemByName(targetId, targetTrade.getName()).orElseThrow(
+                () -> new NoSuchElementException("no such item target")
+        );
+
+        if (sourceTrade.quantity * sourceTrade.price != targetTrade.quantity * targetTrade.price)
+            throw new TradeFailureException("points do not match");
 
         if (sourceItem.quantity < sourceTrade.quantity) {
             throw new TradeFailureException("insufficient funds source");
@@ -33,7 +40,5 @@ public class TradeRules {
         }
 
         return new ArrayList<>(Arrays.asList(sourceItem, targetItem));
-
-
     }
 }
