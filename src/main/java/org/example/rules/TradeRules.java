@@ -19,9 +19,13 @@ public class TradeRules {
     {
         UUID ownerSourceId = inventoryRepo.findById(sourceId).orElseThrow().getOwnerId();
         UUID ownerTargetId = inventoryRepo.findById(targetId).orElseThrow().getOwnerId();
-        rebelRepo.findById(ownerSourceId).filter(Rebel::isNotTraitor).orElseThrow();
+        rebelRepo.findById(ownerSourceId).filter(Rebel::isNotTraitor).orElseThrow(
+                () -> new TradeFailureException("source is either a traitor or could not be found")
+        );
 
-        rebelRepo.findById(ownerTargetId).filter(Rebel::isNotTraitor).orElseThrow();
+        rebelRepo.findById(ownerTargetId).filter(Rebel::isNotTraitor).orElseThrow(
+                () -> new TradeFailureException("target is either a traitor or could not be found")
+        );
 
         Item sourceItem = inventoryRepo.findItemByName(sourceId, sourceTrade.getName()).orElseThrow(
                 () -> new NoSuchElementException("no such item source")
