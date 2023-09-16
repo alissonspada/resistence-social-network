@@ -20,14 +20,12 @@ class TradeUseCaseTest {
     private final InventoryRepository inventoryRepository = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(
-            luke.getId(), new ArrayList<>(List.of(
-                    new Item("doritos", 2, 1))
-    ));
-    private final Inventory leiaInv = new Inventory(
-            leia.getId(), new ArrayList<>(List.of(
-                    new Item("water", 1, 2))
-    ));
+    private final Inventory lukeInv = new Inventory(luke.getId(),
+            new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
+    );
+    private final Inventory leiaInv = new Inventory(leia.getId(),
+            new ArrayList<>( List.of( new Item("water", 1, 2)) )
+    );
     private final TradeUseCase tradeUseCase = new TradeUseCase(inventoryRepository, rebelRepository);
 
     @BeforeEach

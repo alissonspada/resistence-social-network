@@ -12,23 +12,22 @@ import org.example.rules.RegistrationRules;
 import java.util.List;
 
 public class RegistrationUseCase {
+    private final RebelRepository rebelRepo;
+    private final LocationRepository locationRepo;
+    private final InventoryRepository inventoryRepo;
 
-    private final RebelRepository rebelRepository;
-    private final LocationRepository locationRepository;
-    private final InventoryRepository inventoryRepository;
-
-    public RegistrationUseCase(RebelRepository rebelRepository, LocationRepository locationRepository, InventoryRepository inventoryRepository) {
-        this.rebelRepository = rebelRepository;
-        this.locationRepository = locationRepository;
-        this.inventoryRepository = inventoryRepository;
+    public RegistrationUseCase(RebelRepository rebelRepo, LocationRepository locationRepo, InventoryRepository inventoryRepo) {
+        this.rebelRepo = rebelRepo;
+        this.locationRepo = locationRepo;
+        this.inventoryRepo = inventoryRepo;
     }
 
     public void handle(Rebel rebel, Location location, Inventory inventory) {
         RegistrationRules registrationRules = new RegistrationRules();
         List<GenericEntity> data = registrationRules.format(rebel, location, inventory);
 
-        rebelRepository.save( (Rebel) data.get(0) );
-        locationRepository.save( (Location) data.get(1) );
-        inventoryRepository.save( (Inventory) data.get(2) );
+        rebelRepo.save((Rebel) data.get(0));
+        locationRepo.save((Location) data.get(1));
+        inventoryRepo.save((Inventory) data.get(2));
     }
 }

@@ -12,15 +12,16 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class TradeUseCase {
-    private final InventoryRepository inventoryRepository;
-    private final RebelRepository rebelRepository;
-    public TradeUseCase(InventoryRepository inventoryRepository, RebelRepository rebelRepository) {
-        this.inventoryRepository = inventoryRepository;
-        this.rebelRepository = rebelRepository;
+    private final InventoryRepository inventoryRepo;
+    private final RebelRepository rebelRepo;
+
+    public TradeUseCase(InventoryRepository inventoryRepo, RebelRepository rebelRepo) {
+        this.inventoryRepo = inventoryRepo;
+        this.rebelRepo = rebelRepo;
     }
 
     public void trade(UUID sourceId, Item sourceTradeItem, UUID targetId, Item targetTradeItem) throws TradeFailureException {
-        List<Item> checkedTradeItems = new TradeRules(inventoryRepository, rebelRepository)
+        List<Item> checkedTradeItems = new TradeRules(inventoryRepo, rebelRepo)
                 .check(sourceId, sourceTradeItem, targetId, targetTradeItem);
 
         Item sourceInventoryItem = checkedTradeItems.get(0);
@@ -29,8 +30,8 @@ public class TradeUseCase {
         sourceInventoryItem.setQuantity( sourceInventoryItem.getQuantity() - sourceTradeItem.getQuantity() );
         targetInventoryItem.setQuantity( targetInventoryItem.getQuantity() - targetTradeItem.getQuantity() );
 
-        trySetElseAdd( sourceId, targetTradeItem, inventoryRepository );
-        trySetElseAdd( targetId, sourceTradeItem, inventoryRepository );
+        trySetElseAdd( sourceId, targetTradeItem, inventoryRepo);
+        trySetElseAdd( targetId, sourceTradeItem, inventoryRepo);
     }
 
 

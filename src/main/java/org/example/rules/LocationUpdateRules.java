@@ -15,7 +15,7 @@ public class LocationUpdateRules {
 
     public Location handle(UUID id, Location location) {
         rebelRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("no such rebel")
+                () -> new NoSuchElementException("rebel not found")
         );
         GenericRules genericRules = new GenericRules();
         return new Location(

@@ -17,8 +17,7 @@ public class LocationUpdateUseCase {
     }
 
     public void handle(UUID rebelId, UUID locationId, Location location) {
-        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(rebelRepository);
-        Location newLocation = locationUpdateRules.handle(rebelId, location);
+        Location newLocation = new LocationUpdateRules(rebelRepository).handle(rebelId, location);
         locationRepository.findById(locationId).orElseThrow().setNewLocation(newLocation);
     }
 }

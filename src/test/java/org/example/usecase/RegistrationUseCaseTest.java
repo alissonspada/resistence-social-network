@@ -24,27 +24,21 @@ class RegistrationUseCaseTest {
     private final Location lukeLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location leiaLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Inventory lukeInv = new Inventory(luke.getId(),
-            new ArrayList<>(List.of(
-                    new Item("doritos", 2, 1))
-            )
+            new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
     );
     private final Inventory leiaInv = new Inventory(leia.getId(),
-            new ArrayList<>(List.of(
-                    new Item("water", 1, 2))
-            )
+            new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
+    private final RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepository, locationRepository, inventoryRepository);
 
     @BeforeEach
     void setUp() {
         rebelRepository.deleteAll();
-        rebelRepository.save(luke);
-        rebelRepository.save(leia);
         inventoryRepository.deleteAll();
-        inventoryRepository.save(lukeInv);
-        inventoryRepository.save(leiaInv);
         locationRepository.deleteAll();
-        locationRepository.save(lukeLocation);
-        locationRepository.save(leiaLocation);
+
+        registrationUseCase.handle(luke, lukeLocation, lukeInv);
+        registrationUseCase.handle(leia, leiaLocation, leiaInv);
     }
 
     @Test

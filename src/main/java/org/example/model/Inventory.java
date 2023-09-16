@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class Inventory extends GenericEntity {
-    private final UUID id;
-    private final UUID ownerId;
-    private final List<Item> invList;
+    private UUID id;
+    private UUID ownerId;
+    private List<Item> invList;
 
     public Inventory(UUID ownerId, List<Item> invList) {
         this.ownerId = ownerId;
         this.id = UUID.randomUUID();
         this.invList = invList;
     }
+    public Inventory() {}
 
     public List<Item> getInvList() {
         return invList;

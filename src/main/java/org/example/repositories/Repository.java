@@ -14,4 +14,5 @@ public interface Repository<T> {
     void deleteById(UUID id);
 
     void deleteAll();
+    boolean existsById(UUID id);
 }

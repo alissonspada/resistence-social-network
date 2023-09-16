@@ -27,4 +27,7 @@ public abstract class AbstractRepository<T extends GenericEntity> implements Rep
     public void deleteAll() {
         absRepoList.clear();
     }
+    public boolean existsById(UUID id) {
+        return findById(id).isEmpty();
+    }
 }

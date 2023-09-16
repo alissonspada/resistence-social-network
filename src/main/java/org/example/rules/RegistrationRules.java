@@ -26,18 +26,18 @@ public class RegistrationRules {
                 genericRules.handle(location.getBase())
         );
 
-        List<Item> fInvList = new ArrayList<>();
+        List<Item> fInventoryList = new ArrayList<>();
 
         for (Item i: inventory.getInvList()) {
-            fInvList.add(
+            fInventoryList.add(
                     new Item(
                             genericRules.handle(i.getName()),
                             genericRules.handle(i.getQuantity()),
                             genericRules.handle(i.getPrice()))
             );
         }
-        Inventory fInventory = new Inventory(rebel.getId(), fInvList);
+        Inventory fInventory = new Inventory(rebel.getId(), fInventoryList);
 
-        return new ArrayList<>(Arrays.asList(fRebel, fInventory, fLocation));
+        return new ArrayList<>(Arrays.asList(fRebel, fLocation, fInventory));
     }
 }
