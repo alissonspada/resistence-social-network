@@ -29,6 +29,7 @@ public class Rebel extends GenericEntity {
     public boolean isNotTraitor() {
         return !isTraitor();
     }
+    public Integer getReportCounter() { return reportCounter; }
     public List<UUID> getReportedRebels() {
         return reportedRebels;
     }

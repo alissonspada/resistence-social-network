@@ -14,7 +14,7 @@ public class GenericRules {
                 .map( d -> Math.min(d, bound) )
                 .map( d -> Math.max(d, -bound) )
                 .orElseThrow(
-                        () -> new IllegalArgumentException("all parameters required")
+                        () -> new NullPointerException("all parameters required")
                 );
     }
 
