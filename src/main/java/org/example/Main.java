@@ -22,7 +22,7 @@ public class Main {
 
         LocationUpdateUseCase locationUseCase = new LocationUpdateUseCase(rebelRepository, locationRepository);
         locationUseCase.handle(rebel.getId(), location1.getId(), new Location(
-                -500.5, null, "base"));
+                -500.7, null, "base"));
 
         System.out.println(locationRepository.findAll());
     }
