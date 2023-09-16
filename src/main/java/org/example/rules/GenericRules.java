@@ -3,18 +3,16 @@ package org.example.rules;
 import java.util.Optional;
 
 public class GenericRules {
-
     public String handle(String string) {
         return Optional.ofNullable(string)
-                .map(s -> s.substring(0,
-                        Math.min(s.length(), 30)))
+                .map( s -> s.substring(0, Math.min(s.length(), 30)) )
                 .orElse("undefined");
     }
 
     public Double handle(Double coord, int bound) {
         return Optional.ofNullable(coord)
-                .map(d -> Math.min(d, bound))
-                .map(d -> Math.max(d, -bound))
+                .map( d -> Math.min(d, bound) )
+                .map( d -> Math.max(d, -bound) )
                 .orElseThrow(
                         () -> new IllegalArgumentException("all parameters required")
                 );

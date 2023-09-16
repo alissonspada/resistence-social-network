@@ -1,9 +1,9 @@
 package org.example.model;
 
 public class Item {
-    String name;
+    private final String name;
     private Integer quantity;
-    private Integer price;
+    private final Integer price;
 
     public Item(String name, Integer quantity, Integer price) {
         this.name = name;
@@ -16,16 +16,8 @@ public class Item {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public Integer getQuantity() {

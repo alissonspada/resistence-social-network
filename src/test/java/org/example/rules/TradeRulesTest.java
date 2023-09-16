@@ -17,11 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TradeRulesTest {
     private final RebelRepository rebelRepository = new RebelRepository();
     private final InventoryRepository inventoryRepository = new InventoryRepository();
-    Rebel luke = new Rebel("luke", 18, "male");
-    Rebel leia = new Rebel("leia", 30, "female");
-    Inventory lukeInv = new Inventory(luke.getId(), new ArrayList<>(List.of(new Item("doritos", 2, 1))));
-    Inventory leiaInv = new Inventory(leia.getId(), new ArrayList<>(List.of(new Item("water", 1, 2))));
-    TradeRules tradeRules = new TradeRules(inventoryRepository, rebelRepository);
+    private final Rebel luke = new Rebel("luke", 18, "male");
+    private final Rebel leia = new Rebel("leia", 30, "female");
+    private final Inventory lukeInv = new Inventory(
+            luke.getId(), new ArrayList<>(List.of(
+                    new Item("doritos", 2, 1))
+    ));
+    private final Inventory leiaInv = new Inventory(
+            leia.getId(), new ArrayList<>(List.of(
+                    new Item("water", 1, 2))
+    ));
+    private final TradeRules tradeRules = new TradeRules(inventoryRepository, rebelRepository);
 
     @BeforeEach
     void setUp() {
@@ -35,7 +41,6 @@ class TradeRulesTest {
 
     @Test
     void should_throw_NoSuchElementException_when_no_such_item_source() {
-
         Exception e = assertThrows(NoSuchElementException.class, () ->
                 tradeRules.check(lukeInv.getId(), new Item("food", 2, 1),
                         leiaInv.getId(), new Item("water", 1, 2))

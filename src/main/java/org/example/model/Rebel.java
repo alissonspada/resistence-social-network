@@ -37,10 +37,6 @@ public class Rebel extends GenericEntity {
         this.reportCounter++;
     }
 
-    public Integer getReportCounter() {
-        return reportCounter;
-    }
-
     public UUID getId() {
         return uuid;
     }
@@ -49,24 +45,12 @@ public class Rebel extends GenericEntity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getGender() {
         return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     @Override
@@ -78,6 +62,4 @@ public class Rebel extends GenericEntity {
                 ", gender='" + gender + '\'' +
                 '}';
     }
-
-
 }

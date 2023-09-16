@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface Repository<T> {
-
     void save(T entity);
 
     List<T> findAll();

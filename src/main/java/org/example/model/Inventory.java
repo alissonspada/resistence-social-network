@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Inventory extends GenericEntity {
     private final UUID id;
     private final UUID ownerId;
-    private List<Item> invList;
+    private final List<Item> invList;
 
     public Inventory(UUID ownerId, List<Item> invList) {
         this.ownerId = ownerId;
@@ -22,10 +22,6 @@ public class Inventory extends GenericEntity {
 
     public UUID getOwnerId() {
         return ownerId;
-    }
-
-    public void setInvList(List<Item> invList) {
-        this.invList = invList;
     }
 
     @Override

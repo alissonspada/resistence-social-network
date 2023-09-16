@@ -17,7 +17,7 @@ public class Location extends GenericEntity {
     }
     public void setNewLocation(Location newLocation) {
         this.latitude = newLocation.latitude;
-        this.longitude = newLocation.longitude;;
+        this.longitude = newLocation.longitude;
         this.base = newLocation.base;
     }
     public Location() {}
@@ -30,27 +30,13 @@ public class Location extends GenericEntity {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
     public Double getLongitude() {
         return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public String getBase() {
         return base;
     }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-
 
     @Override
     public String toString() {

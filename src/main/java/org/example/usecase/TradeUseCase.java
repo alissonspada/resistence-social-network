@@ -20,7 +20,8 @@ public class TradeUseCase {
     }
 
     public void trade(UUID sourceId, Item sourceTradeItem, UUID targetId, Item targetTradeItem) throws TradeFailureException {
-        List<Item> checkedTradeItems = new TradeRules(inventoryRepository, rebelRepository).check(sourceId, sourceTradeItem, targetId, targetTradeItem);
+        List<Item> checkedTradeItems = new TradeRules(inventoryRepository, rebelRepository)
+                .check(sourceId, sourceTradeItem, targetId, targetTradeItem);
 
         Item sourceInventoryItem = checkedTradeItems.get(0);
         Item targetInventoryItem = checkedTradeItems.get(1);
@@ -28,12 +29,12 @@ public class TradeUseCase {
         sourceInventoryItem.setQuantity( sourceInventoryItem.getQuantity() - sourceTradeItem.getQuantity() );
         targetInventoryItem.setQuantity( targetInventoryItem.getQuantity() - targetTradeItem.getQuantity() );
 
-        tryWithDefault(sourceId, inventoryRepository, targetTradeItem);
-        tryWithDefault(targetId, inventoryRepository, sourceTradeItem);
+        trySetElseAdd( sourceId, targetTradeItem, inventoryRepository );
+        trySetElseAdd( targetId, sourceTradeItem, inventoryRepository );
     }
 
 
-    public void tryWithDefault(UUID id, InventoryRepository invRepo, Item sameNameTradeItem) {
+    private void trySetElseAdd(UUID id, Item sameNameTradeItem, InventoryRepository invRepo) {
         List<Item> invList = new ArrayList<>();
         try {
             invList = invRepo.findById(id).orElseThrow().getInvList();

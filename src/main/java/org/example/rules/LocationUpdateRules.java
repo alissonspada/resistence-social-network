@@ -1,17 +1,15 @@
 package org.example.rules;
 
 import org.example.model.Location;
-import org.example.model.Rebel;
-import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-public class LocationRules {
+public class LocationUpdateRules {
         private final RebelRepository rebelRepository;
 
-    public LocationRules(RebelRepository rebelRepository) {
+    public LocationUpdateRules(RebelRepository rebelRepository) {
         this.rebelRepository = rebelRepository;
     }
 
@@ -23,6 +21,7 @@ public class LocationRules {
         return new Location(
                 genericRules.handle(location.getLatitude(), 180),
                 genericRules.handle(location.getLongitude(), 90),
-                genericRules.handle(location.getBase()));
+                genericRules.handle(location.getBase())
+        );
     }
 }
