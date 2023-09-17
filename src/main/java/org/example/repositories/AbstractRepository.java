@@ -28,6 +28,6 @@ public abstract class AbstractRepository<T extends GenericEntity> implements Rep
         absRepoList.clear();
     }
     public boolean existsById(UUID id) {
-        return findById(id).isEmpty();
+        return findById(id).isPresent();
     }
 }

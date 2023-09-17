@@ -38,8 +38,28 @@ class TradeRulesTest {
     }
 
     @Test
+    void should_throw_TradeFailureException_when_source_inventory_not_found() {
+        inventoryRepository.deleteById(lukeInv.getId());
+        Exception e = assertThrows(TradeFailureException.class, () ->
+                tradeRules.check(lukeInv.getId(), new Item("food", 2, 1),
+                        leiaInv.getId(), new Item("water", 1, 2))
+        );
+        assertTrue(e.getMessage().contains("source inventory not found"));
+    }
+
+    @Test
+    void should_throw_TradeFailureException_when_target_inventory_not_found() {
+        inventoryRepository.deleteById(leiaInv.getId());
+        Exception e = assertThrows(TradeFailureException.class, () ->
+                tradeRules.check(lukeInv.getId(), new Item("food", 2, 1),
+                        leiaInv.getId(), new Item("water", 1, 2))
+        );
+        assertTrue(e.getMessage().contains("target inventory not found"));
+    }
+
+    @Test
     void should_throw_NoSuchElementException_when_no_such_item_source() {
-        Exception e = assertThrows(NoSuchElementException.class, () ->
+        Exception e = assertThrows(TradeFailureException.class, () ->
                 tradeRules.check(lukeInv.getId(), new Item("food", 2, 1),
                         leiaInv.getId(), new Item("water", 1, 2))
         );
@@ -48,7 +68,7 @@ class TradeRulesTest {
 
     @Test
     void should_throw_NoSuchElementException_when_no_such_item_target() {
-        Exception e = assertThrows(NoSuchElementException.class, () ->
+        Exception e = assertThrows(TradeFailureException.class, () ->
                 tradeRules.check(lukeInv.getId(), new Item("doritos", 2, 1),
                         leiaInv.getId(), new Item("cheetos", 1, 2))
         );
@@ -64,7 +84,19 @@ class TradeRulesTest {
                 tradeRules.check(lukeInv.getId(), new Item("doritos", 2, 1),
                         leiaInv.getId(), new Item("cheetos", 1, 2))
         );
-        assertTrue(e.getMessage().contains("source is either a traitor or could not be found"));
+        assertTrue(e.getMessage().contains("source rebel is either a traitor or could not be found"));
+    }
+
+    @Test
+    void should_throw_TradeFailureException_when_target_traitor() {
+        leia.setReportCounterUp();
+        leia.setReportCounterUp();
+        leia.setReportCounterUp();
+        Exception e = assertThrows(TradeFailureException.class, () ->
+                tradeRules.check(lukeInv.getId(), new Item("doritos", 2, 1),
+                        leiaInv.getId(), new Item("cheetos", 1, 2))
+        );
+        assertTrue(e.getMessage().contains("target rebel is either a traitor or could not be found"));
     }
 
     @Test
@@ -84,4 +116,6 @@ class TradeRulesTest {
         );
         assertTrue(e.getMessage().contains("insufficient funds source"));
     }
+
+
 }

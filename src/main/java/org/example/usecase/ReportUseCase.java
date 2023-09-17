@@ -17,8 +17,8 @@ public class ReportUseCase {
         List<UUID> ids = new ReportRules(rebelRepository).handle(sourceId, reportedId);
 
         if (!ids.isEmpty()) {
-            rebelRepository.findById(ids.get(0)).get().setReportCounterUp();
-            rebelRepository.findById(ids.get(1)).get().getReportedRebels().add(ids.get(1));
+            rebelRepository.findById(ids.get(1)).get().setReportCounterUp();
+            rebelRepository.findById(ids.get(0)).get().getReportedRebels().add(ids.get(1));
         }
     }
 }
