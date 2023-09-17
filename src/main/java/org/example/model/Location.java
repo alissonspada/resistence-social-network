@@ -5,7 +5,7 @@ import org.example.repositories.GenericEntity;
 import java.util.UUID;
 
 public class Location extends GenericEntity {
-    private final UUID uuid = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
     private Double latitude;
     private Double longitude;
     private String base;
@@ -38,6 +38,9 @@ public class Location extends GenericEntity {
         return base;
     }
 
+    public void setId(UUID uuid) {
+        this.uuid = uuid;
+    }
     @Override
     public String toString() {
         return "Location{" +

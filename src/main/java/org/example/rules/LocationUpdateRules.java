@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class LocationUpdateRules {
-        private final RebelRepository rebelRepository;
+    private final RebelRepository rebelRepository;
 
     public LocationUpdateRules(RebelRepository rebelRepository) {
         this.rebelRepository = rebelRepository;
@@ -18,10 +18,12 @@ public class LocationUpdateRules {
                 () -> new NoSuchElementException("rebel not found")
         );
         GenericRules genericRules = new GenericRules();
-        return new Location(
+        Location newLocation = new Location(
                 genericRules.handle(location.getLatitude(), 180),
                 genericRules.handle(location.getLongitude(), 90),
                 genericRules.handle(location.getBase())
         );
+        newLocation.setId(location.getId());
+        return newLocation;
     }
 }

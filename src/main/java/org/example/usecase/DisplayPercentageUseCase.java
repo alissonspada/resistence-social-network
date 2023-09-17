@@ -13,14 +13,14 @@ public class DisplayPercentageUseCase {
     }
 
     public String handle(){
+        double allIndividuals = rebelRepository.findAll().size();
         double traitors = rebelRepository.findAll().stream().filter(Rebel::isTraitor).count();
-        double total = rebelRepository.findAll().size();
-        double traitorDecimal = traitors / total;
-        double allianceDecimal = 1 - traitorDecimal;
+        double traitorsDecimal = traitors / allIndividuals;
+        double alliesDecimal = 1 - traitorsDecimal;
         NumberFormat numberFormat = NumberFormat.getPercentInstance();
-        String traitorPercentage = numberFormat.format(traitorDecimal);
-        String alliancePercentage = numberFormat.format(allianceDecimal);
+        String traitorPercentage = numberFormat.format(traitorsDecimal);
+        String alliesPercentage = numberFormat.format(alliesDecimal);
 
-        return "Alliance: " + alliancePercentage + " " + "Traitors: " + traitorPercentage;
+        return "Allies: " + alliesPercentage + " " + "Traitors: " + traitorPercentage;
     }
 }
