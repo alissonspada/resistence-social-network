@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class Rebel extends GenericEntity {
-
     private final UUID uuid = UUID.randomUUID();
     private String name;
     private Integer age;

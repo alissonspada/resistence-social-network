@@ -21,6 +21,6 @@ public class LocationUpdateUseCaseTest {
         rebelRepository.save(rebel);
         Location newLocation = new Location(90.1,30.2,"manjuba");
         locationUpdateUseCase.handle(rebel.getId(), location.getId(), newLocation);
-        Assertions.assertEquals(newLocation, locationRepository.findById(location.getId()).orElseThrow());
+        Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getId()).orElseThrow().toString());
     }
 }

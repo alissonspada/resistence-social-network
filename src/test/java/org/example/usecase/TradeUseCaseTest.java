@@ -43,13 +43,13 @@ class TradeUseCaseTest {
         Item addedItem = new Item("water", 1, 2);
         tradeUseCase.trade(lukeInv.getId(), new Item("doritos", 2, 1),
                 leiaInv.getId(), addedItem);
-        assertTrue(inventoryRepository.findById(lukeInv.getId()).orElseThrow().getInvList().contains(addedItem));
+        assertTrue(inventoryRepository.findById(lukeInv.getId()).orElseThrow().getItemList().contains(addedItem));
     }
 
     @Test
     void should_set_quantity_when_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
-        lukeInv.getInvList().add(new Item("water", 2, 1));
+        lukeInv.getItemList().add(new Item("water", 2, 1));
 
         tradeUseCase.trade(lukeInv.getId(), new Item("doritos", 2, 1),
                 leiaInv.getId(), addedItem);

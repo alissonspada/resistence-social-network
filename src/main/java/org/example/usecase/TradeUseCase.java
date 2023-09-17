@@ -38,7 +38,7 @@ public class TradeUseCase {
     private void trySetElseAdd(UUID id, Item sameNameTradeItem, InventoryRepository invRepo) {
         List<Item> invList = new ArrayList<>();
         try {
-            invList = invRepo.findById(id).orElseThrow().getInvList();
+            invList = invRepo.findById(id).orElseThrow().getItemList();
             Item sameName = invList.stream().filter(i -> i.getName().equals( sameNameTradeItem.getName() )
             ).findFirst().orElseThrow();
 

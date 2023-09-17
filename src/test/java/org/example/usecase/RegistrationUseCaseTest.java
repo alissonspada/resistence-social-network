@@ -16,9 +16,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegistrationUseCaseTest {
-    private final RebelRepository rebelRepository = new RebelRepository();
-    private final InventoryRepository inventoryRepository = new InventoryRepository();
-    private final LocationRepository locationRepository = new LocationRepository();
+    private final RebelRepository rebelRepo = new RebelRepository();
+    private final InventoryRepository inventoryRepo = new InventoryRepository();
+    private final LocationRepository locationRepo = new LocationRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
     private final Location lukeLocation = new Location(0.2, 21.3, "base/galaxy");
@@ -29,13 +29,13 @@ class RegistrationUseCaseTest {
     private final Inventory leiaInv = new Inventory(leia.getId(),
             new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
-    private final RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepository, locationRepository, inventoryRepository);
+    private final RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepo, locationRepo, inventoryRepo);
 
     @BeforeEach
     void setUp() {
-        rebelRepository.deleteAll();
-        inventoryRepository.deleteAll();
-        locationRepository.deleteAll();
+        rebelRepo.deleteAll();
+        inventoryRepo.deleteAll();
+        locationRepo.deleteAll();
 
         registrationUseCase.handle(luke, lukeLocation, lukeInv);
         registrationUseCase.handle(leia, leiaLocation, leiaInv);
@@ -43,16 +43,16 @@ class RegistrationUseCaseTest {
 
     @Test
     void should_save_rebel() {
-        assertDoesNotThrow(() -> rebelRepository.findById(luke.getId()));
+        assertDoesNotThrow(() -> rebelRepo.findById(luke.getId()));
     }
 
     @Test
     void should_save_location() {
-        assertDoesNotThrow(() -> locationRepository.findById(lukeLocation.getId()));
+        assertDoesNotThrow(() -> locationRepo.findById(lukeLocation.getId()));
     }
 
     @Test
     void should_save_inventory() {
-        assertDoesNotThrow(() -> inventoryRepository.findById(lukeInv.getId()));
+        assertDoesNotThrow(() -> inventoryRepo.findById(lukeInv.getId()));
     }
 }

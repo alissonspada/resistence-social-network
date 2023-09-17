@@ -15,7 +15,7 @@ public class DisplayAveragesUseCase {
     }
 
     public String handle() {
-        List<Item> allItems = inventoryRepository.findAll().stream().flatMap(inv -> inv.getInvList().stream()).toList();
+        List<Item> allItems = inventoryRepository.findAll().stream().flatMap(inv -> inv.getItemList().stream()).toList();
         Map<String, Integer> totalEach = new HashMap<>();
         StringBuilder result = new StringBuilder();
         for (Item i : allItems) {

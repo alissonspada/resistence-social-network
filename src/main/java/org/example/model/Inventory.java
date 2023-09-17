@@ -8,17 +8,17 @@ import java.util.UUID;
 public class Inventory extends GenericEntity {
     private UUID id;
     private UUID ownerId;
-    private List<Item> invList;
+    private List<Item> itemList;
 
-    public Inventory(UUID ownerId, List<Item> invList) {
+    public Inventory(UUID ownerId, List<Item> itemList) {
         this.ownerId = ownerId;
         this.id = UUID.randomUUID();
-        this.invList = invList;
+        this.itemList = itemList;
     }
     public Inventory() {}
 
-    public List<Item> getInvList() {
-        return invList;
+    public List<Item> getItemList() {
+        return itemList;
     }
 
     public UUID getOwnerId() {
@@ -32,6 +32,6 @@ public class Inventory extends GenericEntity {
 
     @Override
     public String toString() {
-        return "Inv{" + "id=" + id + ", invList=" + invList + '}';
+        return "Inventory{" + "id=" + id + ", invList=" + itemList + '}';
     }
 }

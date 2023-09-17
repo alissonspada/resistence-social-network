@@ -28,7 +28,7 @@ public class RegistrationRules {
 
         List<Item> fInventoryList = new ArrayList<>();
 
-        for (Item i: inventory.getInvList()) {
+        for (Item i: inventory.getItemList()) {
             fInventoryList.add(
                     new Item(
                             genericRules.handle(i.getName()),
