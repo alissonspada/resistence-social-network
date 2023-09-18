@@ -2,12 +2,16 @@ package org.example.usecase;
 
 import org.example.repositories.RebelRepository;
 import org.example.rules.ReportRules;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class ReportUseCase {
     private final RebelRepository rebelRepository;
 
+    @Autowired
     public ReportUseCase(RebelRepository rebelRepository) {
         this.rebelRepository = rebelRepository;
     }

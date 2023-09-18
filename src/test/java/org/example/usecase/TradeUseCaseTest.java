@@ -20,10 +20,10 @@ class TradeUseCaseTest {
     private final InventoryRepository inventoryRepository = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(luke.getEntityUUID(),
+    private final Inventory lukeInv = new Inventory(luke.getEntityId(),
             new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
     );
-    private final Inventory leiaInv = new Inventory(leia.getEntityUUID(),
+    private final Inventory leiaInv = new Inventory(leia.getEntityId(),
             new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
     private final TradeUseCase tradeUseCase = new TradeUseCase(inventoryRepository, rebelRepository);
@@ -41,9 +41,9 @@ class TradeUseCaseTest {
     @Test
     void should_add_to_list_when_no_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
-        tradeUseCase.handle(lukeInv.getEntityUUID(), new Item("doritos", 2, 1),
-                leiaInv.getEntityUUID(), addedItem);
-        assertTrue(inventoryRepository.findById(lukeInv.getEntityUUID()).orElseThrow().getItemList().contains(addedItem));
+        tradeUseCase.handle(lukeInv.getEntityId(), new Item("doritos", 2, 1),
+                leiaInv.getEntityId(), addedItem);
+        assertTrue(inventoryRepository.findById(lukeInv.getEntityId()).orElseThrow().getItemList().contains(addedItem));
     }
 
     @Test
@@ -51,8 +51,8 @@ class TradeUseCaseTest {
         Item addedItem = new Item("water", 1, 2);
         lukeInv.getItemList().add(new Item("water", 2, 1));
 
-        tradeUseCase.handle(lukeInv.getEntityUUID(), new Item("doritos", 2, 1),
-                leiaInv.getEntityUUID(), addedItem);
-        assertEquals(3, (int) inventoryRepository.findItemByName(lukeInv.getEntityUUID(), "water").orElseThrow().getQuantity());
+        tradeUseCase.handle(lukeInv.getEntityId(), new Item("doritos", 2, 1),
+                leiaInv.getEntityId(), addedItem);
+        assertEquals(3, (int) inventoryRepository.findItemByName(lukeInv.getEntityId(), "water").orElseThrow().getQuantity());
     }
 }

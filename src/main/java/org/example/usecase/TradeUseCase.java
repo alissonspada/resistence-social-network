@@ -5,14 +5,18 @@ import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 import org.example.rules.TradeFailureException;
 import org.example.rules.TradeRules;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class TradeUseCase {
     private final InventoryRepository inventoryRepo;
     private final RebelRepository rebelRepo;
 
+    @Autowired
     public TradeUseCase(InventoryRepository inventoryRepo, RebelRepository rebelRepo) {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;

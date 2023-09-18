@@ -2,18 +2,17 @@ package org.example.repositories;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface Repository<T> {
     void save(T entity);
 
     List<T> findAll();
 
-    Optional<T> findById(UUID id);
+    Optional<T> findById(Integer id);
 
-    void deleteById(UUID id);
+    void deleteById(Integer id);
 
     void deleteAll();
 
-    boolean existsById(UUID id);
+    boolean existsById(Integer id);
 }

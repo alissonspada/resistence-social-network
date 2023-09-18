@@ -32,7 +32,7 @@ class LocationUpdateRulesTest {
         locationRepo.save(new Location(53.53, 41.665, "joao"));
         LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
         Location expectedLocation = new Location(42.1, 22.5, "base");
-        Location returnedLocation = locationUpdateRules.handle(rebel.getEntityUUID(), expectedLocation);
+        Location returnedLocation = locationUpdateRules.handle(rebel.getEntityId(), expectedLocation);
         assertEquals(expectedLocation.toString(), returnedLocation.toString());
     }
 }

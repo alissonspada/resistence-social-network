@@ -1,8 +1,5 @@
 package org.example.controller;
 
-import org.example.repositories.InventoryRepository;
-import org.example.repositories.LocationRepository;
-import org.example.repositories.RebelRepository;
 import org.example.request.RequestLocationUpdate;
 import org.example.request.RequestReport;
 import org.example.request.RequestTrade;
@@ -20,15 +17,14 @@ import java.util.UUID;
 
 @RestController
 public class RebelActionsController {
-    private final RebelRepository rebelRepo;
-    private final LocationRepository locationRepo;
-    private final InventoryRepository inventoryRepo;
-
+    private ReportUseCase reportUseCase;
+    private LocationUpdateUseCase locationUpdateUseCase;
+    private TradeUseCase tradeUseCase;
     @Autowired
-    public RebelActionsController(RebelRepository rebelRepo, LocationRepository locationRepo, InventoryRepository inventoryRepo) {
-        this.rebelRepo = rebelRepo;
-        this.locationRepo = locationRepo;
-        this.inventoryRepo = inventoryRepo;
+    public RebelActionsController(ReportUseCase reportUseCase, LocationUpdateUseCase locationUpdateUseCase, TradeUseCase tradeUseCase) {
+        this.reportUseCase = reportUseCase;
+        this.locationUpdateUseCase = locationUpdateUseCase;
+        this.tradeUseCase = tradeUseCase;
     }
 
     @PatchMapping("/report")
@@ -41,13 +37,12 @@ public class RebelActionsController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("no such rebels");
         }
-        String response = new ReportUseCase(rebelRepo).handle(sourceRebelId, targetRebelId);
+        String response = reportUseCase.handle(sourceRebelId, targetRebelId);
         return ResponseEntity.ok(response + ". reportedId= " + targetRebelId);
     }
 
     @PatchMapping("/locationUpdate")
     public ResponseEntity<String> handleLocationUpdate(@RequestBody RequestLocationUpdate requestLocationUpdate) {
-        LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(locationRepo);
         UUID locationId;
         try {
             locationId = locationRepo
@@ -63,7 +58,6 @@ public class RebelActionsController {
 
     @PatchMapping("/trade")
     public ResponseEntity<String> handleTrade(@RequestBody RequestTrade requestTrade) {
-        TradeUseCase tradeUseCase = new TradeUseCase(inventoryRepo, rebelRepo);
         try {
             tradeUseCase.handle(requestTrade.sourceInventoryId(), requestTrade.sourceTradeItem(),
                     requestTrade.targetInventoryId(), requestTrade.targetTradeItem());

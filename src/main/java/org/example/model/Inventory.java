@@ -11,15 +11,11 @@ import java.util.UUID;
 @Entity
 public class Inventory extends GenericEntity {
     @Id
-    private UUID uuid = UUID.randomUUID();
-    private UUID ownerId;
+    private Integer id;
+    private Integer ownerId;
     @ElementCollection
     private List<Item> itemList;
 
-    public Inventory(UUID ownerId, List<Item> itemList) {
-        this.ownerId = ownerId;
-        this.itemList = itemList;
-    }
     public Inventory(List<Item> itemList) {
         this.itemList = itemList;
     }
@@ -33,23 +29,26 @@ public class Inventory extends GenericEntity {
         itemList = newItemList;
     }
 
-    public UUID getOwnerId() {
+    public Integer getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
+
     @Override
-    public UUID getEntityUUID() {
-        return uuid;
+    public Integer getEntityId() {
+        return id;
     }
-    public void setUuid(UUID newUUID) {
-        uuid = newUUID;
+
+    @Override
+    public void setEntityId(Integer id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "Inventory { " + "itemList=" + itemList + ", UUID=" + uuid + '}';
+        return "Inventory { " + "itemList=" + itemList + ", ID=" + id + '}';
     }
 }

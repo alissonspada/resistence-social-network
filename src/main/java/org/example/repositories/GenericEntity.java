@@ -1,9 +1,6 @@
 package org.example.repositories;
 
-import java.util.UUID;
-
 public abstract class GenericEntity {
-    private final UUID genericUUID = UUID.randomUUID();
-    public UUID getGenericUUID() { return genericUUID; }
-    public abstract UUID getEntityUUID();
+    public abstract Integer getEntityId();
+    public abstract void setEntityId(Integer id);
 }

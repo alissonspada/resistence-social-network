@@ -9,8 +9,8 @@ import java.util.UUID;
 @Entity
 public class Location extends GenericEntity {
     @Id
-    private UUID uuid = UUID.randomUUID();
-    private UUID ownerId;
+    private Integer id;
+    private Integer ownerId;
     private Double latitude;
     private Double longitude;
     private String base;
@@ -30,15 +30,9 @@ public class Location extends GenericEntity {
         this.base = newBase;
     }
 
-    public UUID getEntityUUID() {
-        return uuid;
-    }
 
-    public void setId(UUID uuid) {
-        this.uuid = uuid;
-    }
-    public UUID getOwnerId() { return ownerId; }
-    public void setOwnerId(UUID ownerId) {
+    public Integer getOwnerId() { return ownerId; }
+    public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -65,7 +59,17 @@ public class Location extends GenericEntity {
     }
 
     @Override
+    public Integer getEntityId() {
+        return id;
+    }
+
+    @Override
+    public void setEntityId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
     public String toString() {
-        return "Location { " + "latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + ", UUID=" + uuid + " }";
+        return "Location { " + "latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + ", ID=" + id + " }";
     }
 }

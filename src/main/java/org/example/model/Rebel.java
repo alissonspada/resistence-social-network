@@ -11,12 +11,12 @@ import java.util.UUID;
 @Entity
 public class Rebel extends GenericEntity {
     @Id
-    private UUID uuid = UUID.randomUUID();
+    private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer reportCounter = 0;
-    private final List<UUID> reportedRebels = new ArrayList<>();
+    private final List<Integer> reportedRebels = new ArrayList<>();
 
     public Rebel(String name, Integer age, String gender) {
         this.name = name;
@@ -25,9 +25,6 @@ public class Rebel extends GenericEntity {
     }
 
     public Rebel() {
-    }
-    public void setUUID(UUID newUUID) {
-        uuid = newUUID;
     }
     public void setName(String newName) {
         name = newName;
@@ -50,16 +47,12 @@ public class Rebel extends GenericEntity {
         return reportCounter;
     }
 
-    public List<UUID> getReportedRebels() {
+    public List<Integer> getReportedRebels() {
         return reportedRebels;
     }
 
     public void setReportCounterUp() {
         this.reportCounter++;
-    }
-
-    public UUID getEntityUUID() {
-        return uuid;
     }
 
     public String getName() {
@@ -75,7 +68,17 @@ public class Rebel extends GenericEntity {
     }
 
     @Override
+    public Integer getEntityId() {
+        return id;
+    }
+
+    @Override
+    public void setEntityId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
     public String toString() {
-        return "Rebel { " + "name='" + name + '\'' + ", age=" + age + ", gender='" + gender + '\'' + ", reportCounter=" + reportCounter +  ", UUID=" + uuid + " }";
+        return "Rebel { " + "name='" + name + '\'' + ", age=" + age + ", gender='" + gender + '\'' + ", reportCounter=" + reportCounter +  ", ID=" + id + " }";
     }
 }

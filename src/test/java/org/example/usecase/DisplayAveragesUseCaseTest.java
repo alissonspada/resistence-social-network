@@ -17,10 +17,10 @@ class DisplayAveragesUseCaseTest {
     private final InventoryRepository inventoryRepo = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(luke.getEntityUUID(),
+    private final Inventory lukeInv = new Inventory(luke.getEntityId(),
             new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
     );
-    private final Inventory leiaInv = new Inventory(leia.getEntityUUID(),
+    private final Inventory leiaInv = new Inventory(leia.getEntityId(),
             new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
     private final RebelRepository rebelRepo = new RebelRepository();

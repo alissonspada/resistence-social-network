@@ -18,10 +18,10 @@ class TradeRulesTest {
     private final InventoryRepository inventoryRepository = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(luke.getEntityUUID(),
+    private final Inventory lukeInv = new Inventory(luke.getEntityId(),
             new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
     );
-    private final Inventory leiaInv = new Inventory(leia.getEntityUUID(),
+    private final Inventory leiaInv = new Inventory(leia.getEntityId(),
             new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
     private final TradeRules tradeRules = new TradeRules(inventoryRepository, rebelRepository);
@@ -38,20 +38,20 @@ class TradeRulesTest {
 
     @Test
     void should_throw_TradeFailureException_when_source_inventory_not_found() {
-        inventoryRepository.deleteById(lukeInv.getEntityUUID());
+        inventoryRepository.deleteById(lukeInv.getEntityId());
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("food", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("water", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("food", 2, 1),
+                        leiaInv.getEntityId(), new Item("water", 1, 2))
         );
         assertTrue(e.getMessage().contains("source inventory not found"));
     }
 
     @Test
     void should_throw_TradeFailureException_when_target_inventory_not_found() {
-        inventoryRepository.deleteById(leiaInv.getEntityUUID());
+        inventoryRepository.deleteById(leiaInv.getEntityId());
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("food", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("water", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("food", 2, 1),
+                        leiaInv.getEntityId(), new Item("water", 1, 2))
         );
         assertTrue(e.getMessage().contains("target inventory not found"));
     }
@@ -59,8 +59,8 @@ class TradeRulesTest {
     @Test
     void should_throw_NoSuchElementException_when_no_such_item_source() {
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("food", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("water", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("food", 2, 1),
+                        leiaInv.getEntityId(), new Item("water", 1, 2))
         );
         assertTrue(e.getMessage().contains("no such item source"));
     }
@@ -68,8 +68,8 @@ class TradeRulesTest {
     @Test
     void should_throw_NoSuchElementException_when_no_such_item_target() {
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("doritos", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("cheetos", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("doritos", 2, 1),
+                        leiaInv.getEntityId(), new Item("cheetos", 1, 2))
         );
         assertTrue(e.getMessage().contains("no such item target"));
     }
@@ -80,8 +80,8 @@ class TradeRulesTest {
         luke.setReportCounterUp();
         luke.setReportCounterUp();
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("doritos", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("cheetos", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("doritos", 2, 1),
+                        leiaInv.getEntityId(), new Item("cheetos", 1, 2))
         );
         assertTrue(e.getMessage().contains("source rebel is either a traitor or could not be found"));
     }
@@ -92,8 +92,8 @@ class TradeRulesTest {
         leia.setReportCounterUp();
         leia.setReportCounterUp();
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("doritos", 2, 1),
-                        leiaInv.getEntityUUID(), new Item("cheetos", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("doritos", 2, 1),
+                        leiaInv.getEntityId(), new Item("cheetos", 1, 2))
         );
         assertTrue(e.getMessage().contains("target rebel is either a traitor or could not be found"));
     }
@@ -101,8 +101,8 @@ class TradeRulesTest {
     @Test
     void should_throw_TradeFailureException_when_points_do_not_match() {
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("doritos", 2, 2),
-                        leiaInv.getEntityUUID(), new Item("water", 1, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("doritos", 2, 2),
+                        leiaInv.getEntityId(), new Item("water", 1, 2))
         );
         assertTrue(e.getMessage().contains("points do not match"));
     }
@@ -110,8 +110,8 @@ class TradeRulesTest {
     @Test
     void should_throw_TradeFailureException_when_insufficient_funds_source() {
         Exception e = assertThrows(TradeFailureException.class, () ->
-                tradeRules.check(lukeInv.getEntityUUID(), new Item("doritos", 4, 1),
-                        leiaInv.getEntityUUID(), new Item("water", 2, 2))
+                tradeRules.check(lukeInv.getEntityId(), new Item("doritos", 4, 1),
+                        leiaInv.getEntityId(), new Item("water", 2, 2))
         );
         assertTrue(e.getMessage().contains("insufficient funds source"));
     }
