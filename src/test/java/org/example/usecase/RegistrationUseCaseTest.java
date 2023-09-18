@@ -43,7 +43,6 @@ class RegistrationUseCaseTest {
     public void setUp() {
         registrationUseCase.handle(luke, lukeLocation, lukeInv);
         registrationUseCase.handle(leia, leiaLocation, leiaInv);
-
     }
 
     @Test
@@ -63,10 +62,9 @@ class RegistrationUseCaseTest {
 
     @Test
     void new_inventory_should_contain_only_items_with_different_name() {
-        List<Item> expectedInventoryList =
-                new ArrayList<>(List.of(
-                        new Item("doritos", 20, 1))
-                );
+        List<Item> expectedInventoryList = new ArrayList<>(List.of(
+                new Item("doritos", 20, 1))
+        );
         registrationUseCase.handle(hanSolo, hanSoloLocation, hanSoloInventory);
         assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getId()).orElseThrow().getItemList().toString());
     }
