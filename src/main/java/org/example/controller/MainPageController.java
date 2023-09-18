@@ -1,6 +1,8 @@
 package org.example.controller;
 
-import org.example.repositories.*;
+import org.example.repositories.InventoryRepository;
+import org.example.repositories.LocationRepository;
+import org.example.repositories.RebelRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

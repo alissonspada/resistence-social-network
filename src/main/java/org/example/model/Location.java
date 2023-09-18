@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.example.repositories.GenericEntity;
 
-import java.util.UUID;
-
 @Entity
 public class Location extends GenericEntity {
     @Id

@@ -1,5 +1,6 @@
 package org.example.usecase;
 
+import org.example.model.Inventory;
 import org.example.model.Item;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
@@ -22,7 +23,7 @@ public class TradeUseCase {
         this.rebelRepo = rebelRepo;
     }
 
-    public void handle(UUID sourceInventoryId, Item sourceTradeItem, UUID targetInventoryId, Item targetTradeItem) throws TradeFailureException {
+    public void handle(Integer sourceInventoryId, Item sourceTradeItem, Integer targetInventoryId, Item targetTradeItem) throws TradeFailureException {
         List<Item> checkedTradeItems = new TradeRules(inventoryRepo, rebelRepo)
                 .check(sourceInventoryId, sourceTradeItem, targetInventoryId, targetTradeItem);
 
@@ -33,7 +34,7 @@ public class TradeUseCase {
         targetInventoryItem.setQuantity( targetInventoryItem.getQuantity() - targetTradeItem.getQuantity() );
 
         TradeTryWithDefault tryWithDefault = new TradeTryWithDefault();
-        tryWithDefault.trySetElseAdd( sourceInventoryId, targetTradeItem, targetInventoryItem.getQuantity(), inventoryRepo);
-        tryWithDefault.trySetElseAdd( targetInventoryId, sourceTradeItem, sourceInventoryItem.getQuantity(), inventoryRepo);
+        tryWithDefault.trySetElseAdd( sourceInventory, targetTradeItem);
+        tryWithDefault.trySetElseAdd( targetInventory, sourceTradeItem);
     }
 }

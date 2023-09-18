@@ -19,7 +19,7 @@ public class TradeRules {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;
     }
-    public List<Item> check(UUID sourceInventoryId, Item sourceTrade, UUID targetInventoryId, Item targetTrade) throws TradeFailureException {
+    public List<Item> check(Integer sourceInventoryId, Item sourceTrade, Integer targetInventoryId, Item targetTrade) throws TradeFailureException {
         Inventory sourceInventory = inventoryRepo.findById(sourceInventoryId).orElseThrow(
                 () -> new TradeFailureException("source inventory not found")
         );

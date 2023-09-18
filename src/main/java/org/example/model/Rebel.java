@@ -6,7 +6,6 @@ import org.example.repositories.GenericEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Rebel extends GenericEntity {

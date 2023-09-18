@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import org.example.repositories.GenericEntity;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Inventory extends GenericEntity {
@@ -20,6 +19,7 @@ public class Inventory extends GenericEntity {
         this.itemList = itemList;
     }
     public Inventory() {}
+
 
     public List<Item> getItemList() {
         return itemList;
