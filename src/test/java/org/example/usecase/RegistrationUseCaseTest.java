@@ -43,7 +43,6 @@ class RegistrationUseCaseTest {
     public void setUp() {
         registrationUseCase.handle(luke, lukeLocation, lukeInv);
         registrationUseCase.handle(leia, leiaLocation, leiaInv);
-
     }
 
     @Test
