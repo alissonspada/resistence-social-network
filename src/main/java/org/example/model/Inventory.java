@@ -20,6 +20,9 @@ public class Inventory extends GenericEntity {
         this.ownerId = ownerId;
         this.itemList = itemList;
     }
+    public Inventory(List<Item> itemList) {
+        this.itemList = itemList;
+    }
     public Inventory() {}
 
     public List<Item> getItemList() {
@@ -34,11 +37,13 @@ public class Inventory extends GenericEntity {
         return ownerId;
     }
 
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
+    }
     @Override
     public UUID getUuid() {
         return uuid;
     }
-
     public void setUuid(UUID newUUID) {
         uuid = newUUID;
     }

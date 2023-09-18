@@ -25,6 +25,12 @@ public class RegistrationUseCase {
     public void handle(Rebel rebel, Location location, Inventory inventory) {
         RegistrationRules registrationRules = new RegistrationRules();
         List<GenericEntity> data = registrationRules.format(rebel, location, inventory);
+
+        Inventory fInventory = (Inventory) data.get(2);
+        fInventory.setOwnerId(rebel.getUuid());
+        Location fLocation = (Location) data.get(1);
+        fLocation.setOwnerId(rebel.getUuid());
+
         rebelRepo.save((Rebel) data.get(0));
         locationRepo.save((Location) data.get(1));
         inventoryRepo.save((Inventory) data.get(2));

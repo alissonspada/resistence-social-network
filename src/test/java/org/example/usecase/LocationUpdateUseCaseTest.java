@@ -11,7 +11,7 @@ public class LocationUpdateUseCaseTest {
 
     LocationRepository locationRepository = new LocationRepository();
     RebelRepository rebelRepository = new RebelRepository();
-    LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(rebelRepository, locationRepository);
+    LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(locationRepository);
 
     @Test
     void should_save_new_location(){
@@ -20,7 +20,7 @@ public class LocationUpdateUseCaseTest {
         locationRepository.save(location);
         rebelRepository.save(rebel);
         Location newLocation = new Location(90.0,30.2,"manjuba");
-        locationUpdateUseCase.handle(rebel.getUuid(), location.getUuid(), newLocation);
+        locationUpdateUseCase.handle(location.getUuid(), newLocation);
         Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getUuid()).orElseThrow().toString());
     }
 }

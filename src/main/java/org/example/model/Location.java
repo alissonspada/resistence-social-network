@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Location extends GenericEntity {
     @Id
     private UUID uuid = UUID.randomUUID();
+    private UUID ownerId;
     private Double latitude;
     private Double longitude;
     private String base;
@@ -23,10 +24,10 @@ public class Location extends GenericEntity {
     public Location() {
     }
 
-    public void setNewLocation(Location newLocation) {
-        this.latitude = newLocation.latitude;
-        this.longitude = newLocation.longitude;
-        this.base = newLocation.base;
+    public void setNewLocation(Double newLatitude, Double newLongitude, String newBase) {
+        this.latitude = newLatitude;
+        this.longitude = newLongitude;
+        this.base = newBase;
     }
 
     public UUID getUuid() {
@@ -35,6 +36,10 @@ public class Location extends GenericEntity {
 
     public void setId(UUID uuid) {
         this.uuid = uuid;
+    }
+    public UUID getOwnerId() { return ownerId; }
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Double getLatitude() {

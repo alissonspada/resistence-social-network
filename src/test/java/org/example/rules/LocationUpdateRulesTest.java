@@ -18,7 +18,7 @@ class LocationUpdateRulesTest {
 
     @Test
     void should_throw_NoSuchElementException_when_rebel_not_found() {
-        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(rebelRepo);
+        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
         Exception e = assertThrows(NoSuchElementException.class, () ->
                 locationUpdateRules.handle(UUID.randomUUID(), new Location())
         );
@@ -30,7 +30,7 @@ class LocationUpdateRulesTest {
         Rebel rebel = new Rebel("luke", 18, "male");
         rebelRepo.save(rebel);
         locationRepo.save(new Location(53.53, 41.665, "joao"));
-        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(rebelRepo);
+        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
         Location expectedLocation = new Location(42.1, 22.5, "base");
         Location returnedLocation = locationUpdateRules.handle(rebel.getUuid(), expectedLocation);
         assertEquals(expectedLocation.toString(), returnedLocation.toString());

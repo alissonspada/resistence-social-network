@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
@@ -29,7 +28,6 @@ public class SignUpController {
     public ResponseEntity<String> handleSignUp(@RequestBody RequestSignUp signUpData) {
         RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepo, locationRepo, inventoryRepo);
         registrationUseCase.handle(signUpData.rebel(), signUpData.location(), signUpData.inventory());
-        return ResponseEntity.ok("Registration successful\n\n" + signUpData + "\n" +
-                rebelRepo.findAll().stream().map(Rebel::getUuid).toList());
+        return ResponseEntity.ok("Registration successful\n\n" + signUpData);
     }
 }

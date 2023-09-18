@@ -1,31 +1,31 @@
 package org.example.rules;
 
 import org.example.model.Location;
-import org.example.repositories.RebelRepository;
+import org.example.repositories.LocationRepository;
 
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 public class LocationUpdateRules {
-    private final RebelRepository rebelRepository;
+    private final LocationRepository locationRepo;
 
 
-    public LocationUpdateRules(RebelRepository rebelRepository) {
-        this.rebelRepository = rebelRepository;
+    public LocationUpdateRules(LocationRepository locationRepo) {
+        this.locationRepo = locationRepo;
     }
 
-    public Location handle(UUID id, Location location) {
+    public Location handle(UUID locationId, Location newLocation) {
+        Location oldLocation = locationRepo.findById(locationId).orElse(null);
 
-        rebelRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException("rebel not found")
-        );
+        if (oldLocation == null) return new Location();
+
         GenericRules genericRules = new GenericRules();
-        Location newLocation = new Location(
-                genericRules.handle(location.getLatitude(), 90),
-                genericRules.handle(location.getLongitude(), 180),
-                genericRules.handle(location.getBase())
+
+        oldLocation.setNewLocation(
+                genericRules.handle(newLocation.getLatitude(), 90),
+                genericRules.handle(newLocation.getLongitude(), 180),
+                genericRules.handle(newLocation.getBase())
         );
-        newLocation.setId(location.getUuid());
-        return newLocation;
+
+        return oldLocation;
     }
 }
