@@ -19,8 +19,8 @@ public class LocationUpdateRules {
         );
         GenericRules genericRules = new GenericRules();
         Location newLocation = new Location(
-                genericRules.handle(location.getLatitude(), 180),
-                genericRules.handle(location.getLongitude(), 90),
+                genericRules.handle(location.getLatitude(), 90),
+                genericRules.handle(location.getLongitude(), 180),
                 genericRules.handle(location.getBase())
         );
         newLocation.setId(location.getId());

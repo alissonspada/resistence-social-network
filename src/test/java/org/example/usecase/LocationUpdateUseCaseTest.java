@@ -14,7 +14,7 @@ public class LocationUpdateUseCaseTest {
     LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(rebelRepository, locationRepository);
 
     @Test
-    void handle(){
+    void should_save_new_location(){
         Location location = new Location(150.1,12.2,"xereca");
         Rebel rebel = new Rebel("jacinto pinto no rego", 1,"masculino");
         locationRepository.save(location);

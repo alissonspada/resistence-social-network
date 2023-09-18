@@ -15,15 +15,22 @@ public class Location extends GenericEntity {
         this.longitude = longitude;
         this.base = base;
     }
+
+    public Location() {
+    }
+
     public void setNewLocation(Location newLocation) {
         this.latitude = newLocation.latitude;
         this.longitude = newLocation.longitude;
         this.base = newLocation.base;
     }
-    public Location() {}
 
     public UUID getId() {
         return uuid;
+    }
+
+    public void setId(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Double getLatitude() {
@@ -38,16 +45,8 @@ public class Location extends GenericEntity {
         return base;
     }
 
-    public void setId(UUID uuid) {
-        this.uuid = uuid;
-    }
     @Override
     public String toString() {
-        return "Location{" +
-                "UUID=" + uuid +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", base='" + base + '\'' +
-                '}';
+        return "Location{" + "UUID=" + uuid + ", latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + '}';
     }
 }

@@ -5,7 +5,10 @@ import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class TradeRules {
     private final InventoryRepository inventoryRepo;

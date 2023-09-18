@@ -31,18 +31,18 @@ class GenericRulesTest {
     }
 
     @Test
-    void should_return_180_when_latitude_over_180() {
+    void should_return_90_when_latitude_over_90() {
         GenericRules genericRules = new GenericRules();
-        Double expectedLatitude = 180.0;
-        Double actualLatitude = genericRules.handle(122193.321, 180);
+        Double expectedLatitude = 90.0;
+        Double actualLatitude = genericRules.handle(122193.321, 90);
         assertEquals(expectedLatitude, actualLatitude);
     }
 
     @Test
-    void should_return_90_when_longitude_over_90() {
+    void should_return_180_when_longitude_over_180() {
         GenericRules genericRules = new GenericRules();
-        Double expectedLongitude = 90.0;
-        Double actualLongitude = genericRules.handle(122193.321, 90);
+        Double expectedLongitude = 180.0;
+        Double actualLongitude = genericRules.handle(122193.321, 180);
         assertEquals(expectedLongitude, actualLongitude);
     }
 }

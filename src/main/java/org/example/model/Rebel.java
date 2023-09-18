@@ -21,14 +21,22 @@ public class Rebel extends GenericEntity {
         this.age = age;
         this.gender = gender;
     }
-    public Rebel() {}
+
+    public Rebel() {
+    }
+
     public boolean isTraitor() {
         return (reportCounter > 2);
     }
+
     public boolean isNotTraitor() {
         return !isTraitor();
     }
-    public Integer getReportCounter() { return reportCounter; }
+
+    public Integer getReportCounter() {
+        return reportCounter;
+    }
+
     public List<UUID> getReportedRebels() {
         return reportedRebels;
     }
@@ -55,11 +63,6 @@ public class Rebel extends GenericEntity {
 
     @Override
     public String toString() {
-        return "Rebel{" +
-                "UUID=" + uuid +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                '}';
+        return "Rebel{" + "UUID=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", gender='" + gender + '\'' + '}';
     }
 }
