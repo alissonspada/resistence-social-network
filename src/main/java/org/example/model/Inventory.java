@@ -1,18 +1,23 @@
 package org.example.model;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.example.repositories.GenericEntity;
 
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Inventory extends GenericEntity {
-    private UUID id;
+    @Id
+    private UUID id = UUID.randomUUID();
     private UUID ownerId;
+    @ElementCollection
     private List<Item> itemList;
 
     public Inventory(UUID ownerId, List<Item> itemList) {
         this.ownerId = ownerId;
-        this.id = UUID.randomUUID();
         this.itemList = itemList;
     }
     public Inventory() {}

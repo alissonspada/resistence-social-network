@@ -1,5 +1,8 @@
 package org.example.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Item {
     private final String name;
     private final Integer price;

@@ -1,10 +1,14 @@
 package org.example.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.example.repositories.GenericEntity;
 
 import java.util.UUID;
 
+@Entity
 public class Location extends GenericEntity {
+    @Id
     private UUID uuid = UUID.randomUUID();
     private Double latitude;
     private Double longitude;

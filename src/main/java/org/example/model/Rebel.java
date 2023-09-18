@@ -1,12 +1,16 @@
 package org.example.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.example.repositories.GenericEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Rebel extends GenericEntity {
+    @Id
     private UUID uuid = UUID.randomUUID();
     private String name;
     private Integer age;
