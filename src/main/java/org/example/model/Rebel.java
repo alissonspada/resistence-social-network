@@ -15,12 +15,10 @@ public class Rebel extends GenericEntity {
     private String name;
     private Integer age;
     private String gender;
-    private Integer reportCounter;
-    private List<UUID> reportedRebels;
+    private Integer reportCounter = 0;
+    private final List<UUID> reportedRebels = new ArrayList<>();
 
     public Rebel(String name, Integer age, String gender) {
-        this.reportedRebels = new ArrayList<>();
-        this.reportCounter = 0;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -60,7 +58,7 @@ public class Rebel extends GenericEntity {
         this.reportCounter++;
     }
 
-    public UUID getId() {
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -78,6 +76,6 @@ public class Rebel extends GenericEntity {
 
     @Override
     public String toString() {
-        return "Rebel{" + "UUID=" + uuid + ", name='" + name + '\'' + ", age=" + age + ", gender='" + gender + '\'' + '}';
+        return "Rebel { " + "name='" + name + '\'' + ", age=" + age + ", gender='" + gender + '\'' + ", reportCounter=" + reportCounter +  ", UUID=" + uuid + " }";
     }
 }

@@ -3,7 +3,6 @@ package org.example.usecase;
 import org.example.repositories.RebelRepository;
 import org.example.rules.ReportRules;
 
-import java.util.List;
 import java.util.UUID;
 
 public class ReportUseCase {
@@ -13,12 +12,14 @@ public class ReportUseCase {
         this.rebelRepository = rebelRepository;
     }
 
-    public void handle(UUID sourceId, UUID reportedId) {
-        List<UUID> ids = new ReportRules(rebelRepository).handle(sourceId, reportedId);
+    public String handle(UUID sourceId, UUID targetId) {
+        String response = new ReportRules(rebelRepository).handle(sourceId, targetId);
 
-        if (!ids.isEmpty()) {
-            rebelRepository.findById(ids.get(1)).get().setReportCounterUp();
-            rebelRepository.findById(ids.get(0)).get().getReportedRebels().add(ids.get(1));
+        if (response.isEmpty()) {
+            rebelRepository.findById(targetId).get().setReportCounterUp();
+            rebelRepository.findById(sourceId).get().getReportedRebels().add(targetId);
+            return "Report successful";
         }
+        return response;
     }
 }

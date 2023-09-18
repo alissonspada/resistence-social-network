@@ -3,5 +3,5 @@ package org.example.repositories;
 import java.util.UUID;
 
 public abstract class GenericEntity {
-    public abstract UUID getId();
+    public abstract UUID getUuid();
 }

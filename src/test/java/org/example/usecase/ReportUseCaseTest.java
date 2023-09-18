@@ -17,8 +17,8 @@ public class ReportUseCaseTest {
         rebelRepository.save(addRebel1);
         rebelRepository.save(addRebel2);
 
-        reportUseCase.handle(addRebel1.getId(), addRebel2.getId());
-        Assertions.assertEquals(1, (int) rebelRepository.findById(addRebel2.getId()).orElseThrow().getReportCounter());
+        reportUseCase.handle(addRebel1.getUuid(), addRebel2.getUuid());
+        Assertions.assertEquals(1, (int) rebelRepository.findById(addRebel2.getUuid()).orElseThrow().getReportCounter());
     }
 
 }

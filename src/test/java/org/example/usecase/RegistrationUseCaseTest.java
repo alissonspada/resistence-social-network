@@ -15,7 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RegistrationUseCaseTest {
     private final RebelRepository rebelRepo = new RebelRepository();
@@ -27,13 +28,13 @@ class RegistrationUseCaseTest {
     private final Location lukeLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location leiaLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location hanSoloLocation = new Location(24.1, 42.1, "base");
-    private final Inventory lukeInv = new Inventory(luke.getId(),
+    private final Inventory lukeInv = new Inventory(luke.getUuid(),
                 new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
             );
-    private final Inventory leiaInv = new Inventory(leia.getId(),
+    private final Inventory leiaInv = new Inventory(leia.getUuid(),
                 new ArrayList<>( List.of( new Item("water", 1, 2)) )
             );
-    private final Inventory hanSoloInventory = new Inventory(hanSolo.getId(),
+    private final Inventory hanSoloInventory = new Inventory(hanSolo.getUuid(),
                 new ArrayList<>(Arrays.asList(( new Item("doritos", 2, 1)),
             new Item("doritos", 20, 1))
             ));
@@ -47,17 +48,17 @@ class RegistrationUseCaseTest {
 
     @Test
     void should_save_rebel() {
-        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getId()));
+        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getUuid()));
     }
 
     @Test
     void should_save_location() {
-        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getId()));
+        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getUuid()));
     }
 
     @Test
     void should_save_inventory() {
-        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getId()));
+        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getUuid()));
     }
 
     @Test
@@ -67,6 +68,6 @@ class RegistrationUseCaseTest {
                         new Item("doritos", 20, 1))
                 );
         registrationUseCase.handle(hanSolo, hanSoloLocation, hanSoloInventory);
-        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getId()).orElseThrow().getItemList().toString());
+        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getUuid()).orElseThrow().getItemList().toString());
     }
 }

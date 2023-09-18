@@ -20,10 +20,10 @@ class TradeUseCaseTest {
     private final InventoryRepository inventoryRepository = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(luke.getId(),
+    private final Inventory lukeInv = new Inventory(luke.getUuid(),
             new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
     );
-    private final Inventory leiaInv = new Inventory(leia.getId(),
+    private final Inventory leiaInv = new Inventory(leia.getUuid(),
             new ArrayList<>( List.of( new Item("water", 1, 2)) )
     );
     private final TradeUseCase tradeUseCase = new TradeUseCase(inventoryRepository, rebelRepository);
@@ -41,9 +41,9 @@ class TradeUseCaseTest {
     @Test
     void should_add_to_list_when_no_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
-        tradeUseCase.trade(lukeInv.getId(), new Item("doritos", 2, 1),
-                leiaInv.getId(), addedItem);
-        assertTrue(inventoryRepository.findById(lukeInv.getId()).orElseThrow().getItemList().contains(addedItem));
+        tradeUseCase.trade(lukeInv.getUuid(), new Item("doritos", 2, 1),
+                leiaInv.getUuid(), addedItem);
+        assertTrue(inventoryRepository.findById(lukeInv.getUuid()).orElseThrow().getItemList().contains(addedItem));
     }
 
     @Test
@@ -51,8 +51,8 @@ class TradeUseCaseTest {
         Item addedItem = new Item("water", 1, 2);
         lukeInv.getItemList().add(new Item("water", 2, 1));
 
-        tradeUseCase.trade(lukeInv.getId(), new Item("doritos", 2, 1),
-                leiaInv.getId(), addedItem);
-        assertEquals(3, (int) inventoryRepository.findItemByName(lukeInv.getId(), "water").orElseThrow().getQuantity());
+        tradeUseCase.trade(lukeInv.getUuid(), new Item("doritos", 2, 1),
+                leiaInv.getUuid(), addedItem);
+        assertEquals(3, (int) inventoryRepository.findItemByName(lukeInv.getUuid(), "water").orElseThrow().getQuantity());
     }
 }

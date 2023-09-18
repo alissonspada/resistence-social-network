@@ -2,7 +2,7 @@ package org.example.rules;
 
 import org.example.repositories.RebelRepository;
 
-import java.util.*;
+import java.util.UUID;
 
 public class ReportRules {
     private final RebelRepository rebelRepo;
@@ -11,12 +11,11 @@ public class ReportRules {
         this.rebelRepo = rebelRepo;
     }
 
-    public List<UUID> handle(UUID sourceId, UUID targetId) throws NoSuchElementException {
-        if (rebelRepo.existsById(sourceId)) throw new NoSuchElementException("source not found");
-        if (rebelRepo.existsById(targetId)) throw new NoSuchElementException("target not found");
+    public String handle(UUID sourceId, UUID targetId) {
+        if (!rebelRepo.existsById(sourceId)) return "source not found";
+        if (!rebelRepo.existsById(targetId)) return "target not found";
+        if (rebelRepo.findById(sourceId).get().getReportedRebels().contains(targetId)) return "rebel already reported";
 
-        if (rebelRepo.findById(sourceId).orElseThrow().getReportedRebels().contains(targetId)) return new ArrayList<>();
-
-        return new ArrayList<>(Arrays.asList(sourceId, targetId));
+        return "";
     }
 }

@@ -29,7 +29,7 @@ public class Location extends GenericEntity {
         this.base = newLocation.base;
     }
 
-    public UUID getId() {
+    public UUID getUuid() {
         return uuid;
     }
 
@@ -58,8 +58,9 @@ public class Location extends GenericEntity {
     public void setBase(String newBase) {
         base = newBase;
     }
+
     @Override
     public String toString() {
-        return "Location{" + "UUID=" + uuid + ", latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + '}';
+        return "Location { " + "latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + ", UUID=" + uuid + " }";
     }
 }

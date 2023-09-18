@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 public class Inventory extends GenericEntity {
     @Id
-    private UUID id = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
     private UUID ownerId;
     @ElementCollection
     private List<Item> itemList;
@@ -35,15 +35,16 @@ public class Inventory extends GenericEntity {
     }
 
     @Override
-    public UUID getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(UUID newUUID) {
-        id = newUUID;
+    public void setUuid(UUID newUUID) {
+        uuid = newUUID;
     }
+
     @Override
     public String toString() {
-        return "Inventory{" + "id=" + id + ", invList=" + itemList + '}';
+        return "Inventory { " + "itemList=" + itemList + ", UUID=" + uuid + '}';
     }
 }

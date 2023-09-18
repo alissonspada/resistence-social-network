@@ -25,7 +25,7 @@ public class LocationUpdateRules {
                 genericRules.handle(location.getLongitude(), 180),
                 genericRules.handle(location.getBase())
         );
-        newLocation.setId(location.getId());
+        newLocation.setId(location.getUuid());
         return newLocation;
     }
 }
