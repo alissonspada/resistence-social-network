@@ -1,5 +1,6 @@
 package org.example.rules;
 
+import org.example.model.Inventory;
 import org.example.model.Item;
 import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
@@ -18,29 +19,29 @@ public class TradeRules {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;
     }
-    public List<Item> check(UUID sourceId, Item sourceTrade, UUID targetId, Item targetTrade) throws TradeFailureException {
-        UUID ownerSourceId = inventoryRepo.findById(sourceId).orElseThrow(
+    public List<Item> check(UUID sourceInventoryId, Item sourceTrade, UUID targetInventoryId, Item targetTrade) throws TradeFailureException {
+        Inventory sourceInventory = inventoryRepo.findById(sourceInventoryId).orElseThrow(
                 () -> new TradeFailureException("source inventory not found")
-        ).getOwnerId();
-        UUID ownerTargetId = inventoryRepo.findById(targetId).orElseThrow(
+        );
+        Inventory targetInventory = inventoryRepo.findById(targetInventoryId).orElseThrow(
                 () -> new TradeFailureException("target inventory not found")
-        ).getOwnerId();
+        );
 
-        rebelRepo.findById(ownerSourceId).filter(Rebel::isNotTraitor).orElseThrow(
+        rebelRepo.findById(sourceInventory.getOwnerId()).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("source rebel is either a traitor or could not be found")
         );
-        rebelRepo.findById(ownerTargetId).filter(Rebel::isNotTraitor).orElseThrow(
+        rebelRepo.findById(targetInventory.getOwnerId()).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("target rebel is either a traitor or could not be found")
         );
 
-        Item sourceItem = inventoryRepo.findItemByName(sourceId, sourceTrade.getName()).orElseThrow(
+        Item sourceItem = inventoryRepo.findItemByName(sourceInventoryId, sourceTrade.getName()).orElseThrow(
                 () -> new TradeFailureException("no such item source")
         );
-        Item targetItem = inventoryRepo.findItemByName(targetId, targetTrade.getName()).orElseThrow(
+        Item targetItem = inventoryRepo.findItemByName(targetInventoryId, targetTrade.getName()).orElseThrow(
                 () -> new TradeFailureException("no such item target")
         );
 
-        if (sourceTrade.getQuantity() * sourceTrade.getPrice() != targetTrade.getQuantity() * targetTrade.getPrice())
+        if (sourceTrade.getQuantity() * sourceItem.getPrice() != targetTrade.getQuantity() * targetItem.getPrice())
             throw new TradeFailureException("points do not match");
 
         if (sourceItem.getQuantity() < sourceTrade.getQuantity()) throw new TradeFailureException("insufficient funds source");

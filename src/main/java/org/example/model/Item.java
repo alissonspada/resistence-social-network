@@ -4,8 +4,8 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Item {
-    private final String name;
-    private final Integer price;
+    private String name;
+    private Integer price;
     private Integer quantity;
 
     public Item(String name, Integer quantity, Integer price) {
@@ -13,6 +13,11 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
     }
+    public Item(String name, Integer quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
+    public Item() {}
 
     public String getName() {
         return name;

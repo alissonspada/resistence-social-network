@@ -41,7 +41,7 @@ class TradeUseCaseTest {
     @Test
     void should_add_to_list_when_no_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
-        tradeUseCase.trade(lukeInv.getUuid(), new Item("doritos", 2, 1),
+        tradeUseCase.handle(lukeInv.getUuid(), new Item("doritos", 2, 1),
                 leiaInv.getUuid(), addedItem);
         assertTrue(inventoryRepository.findById(lukeInv.getUuid()).orElseThrow().getItemList().contains(addedItem));
     }
@@ -51,7 +51,7 @@ class TradeUseCaseTest {
         Item addedItem = new Item("water", 1, 2);
         lukeInv.getItemList().add(new Item("water", 2, 1));
 
-        tradeUseCase.trade(lukeInv.getUuid(), new Item("doritos", 2, 1),
+        tradeUseCase.handle(lukeInv.getUuid(), new Item("doritos", 2, 1),
                 leiaInv.getUuid(), addedItem);
         assertEquals(3, (int) inventoryRepository.findItemByName(lukeInv.getUuid(), "water").orElseThrow().getQuantity());
     }
