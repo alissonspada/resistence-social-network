@@ -17,11 +17,11 @@ public abstract class AbstractRepository<T extends GenericEntity> implements Rep
     }
 
     public Optional<T> findById(UUID id) {
-        return absRepoList.stream().filter(o -> o.getUuid().equals(id)).findFirst();
+        return absRepoList.stream().filter(o -> o.getEntityUUID().equals(id)).findFirst();
     }
 
     public void deleteById(UUID id) {
-        absRepoList.remove(absRepoList.stream().filter(o -> o.getUuid().equals(id)).findFirst().orElseThrow());
+        absRepoList.remove(absRepoList.stream().filter(o -> o.getEntityUUID().equals(id)).findFirst().orElseThrow());
     }
 
     public void deleteAll() {

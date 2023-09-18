@@ -58,7 +58,7 @@ public class Rebel extends GenericEntity {
         this.reportCounter++;
     }
 
-    public UUID getUuid() {
+    public UUID getEntityUUID() {
         return uuid;
     }
 

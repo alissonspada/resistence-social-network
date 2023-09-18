@@ -28,13 +28,13 @@ class RegistrationUseCaseTest {
     private final Location lukeLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location leiaLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location hanSoloLocation = new Location(24.1, 42.1, "base");
-    private final Inventory lukeInv = new Inventory(luke.getUuid(),
+    private final Inventory lukeInv = new Inventory(luke.getEntityUUID(),
                 new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
             );
-    private final Inventory leiaInv = new Inventory(leia.getUuid(),
+    private final Inventory leiaInv = new Inventory(leia.getEntityUUID(),
                 new ArrayList<>( List.of( new Item("water", 1, 2)) )
             );
-    private final Inventory hanSoloInventory = new Inventory(hanSolo.getUuid(),
+    private final Inventory hanSoloInventory = new Inventory(hanSolo.getEntityUUID(),
                 new ArrayList<>(Arrays.asList(( new Item("doritos", 2, 1)),
             new Item("doritos", 20, 1))
             ));
@@ -48,17 +48,17 @@ class RegistrationUseCaseTest {
 
     @Test
     void should_save_rebel() {
-        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getUuid()));
+        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getEntityUUID()));
     }
 
     @Test
     void should_save_location() {
-        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getUuid()));
+        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getEntityUUID()));
     }
 
     @Test
     void should_save_inventory() {
-        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getUuid()));
+        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getEntityUUID()));
     }
 
     @Test
@@ -68,6 +68,6 @@ class RegistrationUseCaseTest {
                         new Item("doritos", 20, 1))
                 );
         registrationUseCase.handle(hanSolo, hanSoloLocation, hanSoloInventory);
-        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getUuid()).orElseThrow().getItemList().toString());
+        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getEntityUUID()).orElseThrow().getItemList().toString());
     }
 }

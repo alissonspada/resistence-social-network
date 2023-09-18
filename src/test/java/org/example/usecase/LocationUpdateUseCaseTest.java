@@ -20,7 +20,7 @@ public class LocationUpdateUseCaseTest {
         locationRepository.save(location);
         rebelRepository.save(rebel);
         Location newLocation = new Location(90.0,30.2,"manjuba");
-        locationUpdateUseCase.handle(location.getUuid(), newLocation);
-        Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getUuid()).orElseThrow().toString());
+        locationUpdateUseCase.handle(location.getEntityUUID(), newLocation);
+        Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getEntityUUID()).orElseThrow().toString());
     }
 }

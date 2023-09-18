@@ -30,7 +30,7 @@ public class Location extends GenericEntity {
         this.base = newBase;
     }
 
-    public UUID getUuid() {
+    public UUID getEntityUUID() {
         return uuid;
     }
 

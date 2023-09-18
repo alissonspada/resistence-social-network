@@ -36,22 +36,10 @@ public class RebelActionsController {
         UUID sourceRebelId;
         UUID targetRebelId;
         try {
-            sourceRebelId = rebelRepo
-                    .findAll()
-                    .stream()
-                    .filter(rebel -> rebel.getName().equals(requestReport.sourceName()))
-                    .findFirst()
-                    .orElseThrow()
-                    .getUuid();
-            targetRebelId = rebelRepo
-                    .findAll()
-                    .stream()
-                    .filter(rebel -> rebel.getName().equals(requestReport.targetName()))
-                    .findFirst()
-                    .orElseThrow()
-                    .getUuid();
+            sourceRebelId = rebelRepo.findByName(requestReport.sourceName()).get().getEntityUUID();
+            targetRebelId = rebelRepo.findByName(requestReport.targetName()).get().getEntityUUID();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("no such rebel with name " + requestReport.sourceName());
+            return ResponseEntity.badRequest().body("no such rebels");
         }
         String response = new ReportUseCase(rebelRepo).handle(sourceRebelId, targetRebelId);
         return ResponseEntity.ok(response + ". reportedId= " + targetRebelId);
@@ -60,7 +48,16 @@ public class RebelActionsController {
     @PatchMapping("/locationUpdate")
     public ResponseEntity<String> handleLocationUpdate(@RequestBody RequestLocationUpdate requestLocationUpdate) {
         LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(locationRepo);
-        String response = locationUpdateUseCase.handle(requestLocationUpdate.locationId(), requestLocationUpdate.newLocation());
+        UUID locationId;
+        try {
+            locationId = locationRepo
+                    .findById(rebelRepo.findByName(requestLocationUpdate.rebelName()).orElseThrow().getEntityUUID())
+                    .orElseThrow()
+                    .getOwnerId();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("no such rebel");
+        }
+        String response = locationUpdateUseCase.handle(locationId, requestLocationUpdate.newLocation());
         return ResponseEntity.ok(response);
     }
 

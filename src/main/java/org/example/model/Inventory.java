@@ -41,7 +41,7 @@ public class Inventory extends GenericEntity {
         this.ownerId = ownerId;
     }
     @Override
-    public UUID getUuid() {
+    public UUID getEntityUUID() {
         return uuid;
     }
     public void setUuid(UUID newUUID) {
