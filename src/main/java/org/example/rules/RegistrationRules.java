@@ -14,17 +14,13 @@ public class RegistrationRules {
     public List<GenericEntity> format(Rebel rebel, Location location, Inventory inventory) {
         GenericRules genericRules = new GenericRules();
 
-        Rebel fRebel = new Rebel(
-                genericRules.handle(rebel.getName()),
-                genericRules.handle(rebel.getAge()),
-                genericRules.handle(rebel.getGender())
-        );
+        rebel.setName(genericRules.handle(rebel.getName()));
+        rebel.setGender(genericRules.handle(rebel.getGender()));
+        rebel.setAge(genericRules.handle(rebel.getAge()));
 
-        Location fLocation = new Location(
-                genericRules.handle(location.getLatitude(), 90),
-                genericRules.handle(location.getLongitude(), 180),
-                genericRules.handle(location.getBase())
-        );
+        location.setLatitude(genericRules.handle(location.getLatitude(), 90));
+        location.setLongitude(genericRules.handle(location.getLongitude(), 180));
+        location.setBase(genericRules.handle(location.getBase()));
 
         List<Item> fInventoryList = new ArrayList<>();
 
@@ -51,8 +47,8 @@ public class RegistrationRules {
                         .setQuantity(i.getQuantity());
             }
         }
-        Inventory fInventory = new Inventory(rebel.getId(), fInventoryList);
+        inventory.setNewItemList(fInventoryList);
 
-        return new ArrayList<>(Arrays.asList(fRebel, fLocation, fInventory));
+        return new ArrayList<>(Arrays.asList(rebel, location, inventory));
     }
 }

@@ -45,6 +45,15 @@ public class Location extends GenericEntity {
         return base;
     }
 
+    public void setLatitude(Double newLatitude) {
+        latitude = newLatitude;
+    }
+    public void setLongitude(Double newLongitude){
+        longitude = newLongitude;
+    }
+    public void setBase(String newBase) {
+        base = newBase;
+    }
     @Override
     public String toString() {
         return "Location{" + "UUID=" + uuid + ", latitude=" + latitude + ", longitude=" + longitude + ", base='" + base + '\'' + '}';

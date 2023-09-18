@@ -19,7 +19,7 @@ public class LocationUpdateUseCaseTest {
         Rebel rebel = new Rebel("jacinto pinto no rego", 1,"masculino");
         locationRepository.save(location);
         rebelRepository.save(rebel);
-        Location newLocation = new Location(90.1,30.2,"manjuba");
+        Location newLocation = new Location(90.0,30.2,"manjuba");
         locationUpdateUseCase.handle(rebel.getId(), location.getId(), newLocation);
         Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getId()).orElseThrow().toString());
     }

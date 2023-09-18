@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Rebel extends GenericEntity {
-    private final UUID uuid = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
     private String name;
     private Integer age;
     private String gender;
@@ -24,7 +24,18 @@ public class Rebel extends GenericEntity {
 
     public Rebel() {
     }
-
+    public void setUUID(UUID newUUID) {
+        uuid = newUUID;
+    }
+    public void setName(String newName) {
+        name = newName;
+    }
+    public void setAge(Integer newAge) {
+        age = newAge;
+    }
+    public void setGender(String newGender) {
+        gender = newGender;
+    }
     public boolean isTraitor() {
         return (reportCounter > 2);
     }
