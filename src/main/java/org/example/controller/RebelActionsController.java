@@ -1,12 +1,13 @@
 package org.example.controller;
 
+import org.example.repositories.InventoryRepository;
+import org.example.repositories.LocationRepository;
+import org.example.repositories.RebelRepository;
 import org.example.request.RequestLocationUpdate;
 import org.example.request.RequestReport;
 import org.example.request.RequestTrade;
 import org.example.rules.TradeFailureException;
-import org.example.usecase.LocationUpdateUseCase;
 import org.example.usecase.ReportUseCase;
-import org.example.usecase.TradeUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,26 +18,29 @@ import java.util.UUID;
 
 @RestController
 public class RebelActionsController {
-    private ReportUseCase reportUseCase;
-    private LocationUpdateUseCase locationUpdateUseCase;
-    private TradeUseCase tradeUseCase;
+    private final RebelRepository rebelRepo;
+    private final LocationRepository locationRepo;
+    private final InventoryRepository inventoryRepo;
+
     @Autowired
-    public RebelActionsController(ReportUseCase reportUseCase, LocationUpdateUseCase locationUpdateUseCase, TradeUseCase tradeUseCase) {
-        this.reportUseCase = reportUseCase;
-        this.locationUpdateUseCase = locationUpdateUseCase;
-        this.tradeUseCase = tradeUseCase;
+    public RebelActionsController(RebelRepository rebelRepo, LocationRepository locationRepo, InventoryRepository inventoryRepo) {
+        this.rebelRepo = rebelRepo;
+        this.locationRepo = locationRepo;
+        this.inventoryRepo = inventoryRepo;
     }
+
 
     @PatchMapping("/report")
     public ResponseEntity<String> handleReport(@RequestBody RequestReport requestReport) {
-        UUID sourceRebelId;
-        UUID targetRebelId;
+        Integer sourceRebelId;
+        Integer targetRebelId;
         try {
-            sourceRebelId = rebelRepo.findByName(requestReport.sourceName()).get().getEntityUUID();
-            targetRebelId = rebelRepo.findByName(requestReport.targetName()).get().getEntityUUID();
+            sourceRebelId = rebelRepo.findByName(requestReport.sourceName()).get().getEntityId();
+            targetRebelId = rebelRepo.findByName(requestReport.targetName()).get().getEntityId();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("no such rebels");
         }
+        ReportUseCase reportUseCase = new ReportUseCase(rebelRepo);
         String response = reportUseCase.handle(sourceRebelId, targetRebelId);
         return ResponseEntity.ok(response + ". reportedId= " + targetRebelId);
     }
