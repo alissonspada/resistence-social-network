@@ -8,7 +8,6 @@ import java.util.UUID;
 public class LocationUpdateRules {
     private final LocationRepository locationRepo;
 
-
     public LocationUpdateRules(LocationRepository locationRepo) {
         this.locationRepo = locationRepo;
     }

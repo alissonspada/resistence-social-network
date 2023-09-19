@@ -4,29 +4,49 @@ import org.example.model.Inventory;
 import org.example.model.Item;
 import org.springframework.stereotype.Repository;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 @Repository
 public class InventoryRepository extends AbstractRepository<Inventory> {
     public Optional<Item> findItemByName(Integer id, String itemName) {
         if (findById(id).isPresent())
             return findById(id).get().getItemList().stream()
-                .filter(i -> i.getName().equals(itemName))
+                .filter(item -> item.getName().equals(itemName))
                 .findFirst();
         else return Optional.empty();
     }
 
-    public void exchangeItems(Integer sourceInventoryId, Integer targetInventoryId, Item sourceItem, Item targetItem) {
-       if (findById(sourceInventoryId).isPresent() && findById(targetInventoryId).isPresent()){
-           Inventory sourceInventory = findById(sourceInventoryId).get();
-           Inventory targetInventory = findById(targetInventoryId).get();
+    public void addQuantity(Integer inventoryId, Item tradeItem) {
+        if (findById(inventoryId).isPresent()) {
+            Inventory inventory = findById(inventoryId).get();
+            try {
+                Item sameNameItem = inventory.getItemList()
+                        .stream()
+                        .filter(item -> item.getName().equals(tradeItem.getName()))
+                        .findFirst()
+                        .orElseThrow();
+                int currentQuantity = sameNameItem.getQuantity();
+                int extraQuantity = tradeItem.getQuantity();
+                sameNameItem.setQuantity(currentQuantity + extraQuantity);
+            } catch (Exception e) {
+                inventory.getItemList().add(tradeItem);
+            }
+        }
+    }
 
-           Item sameNameSourceItem = sourceInventory.getItemList().stream()
-                   .filter(item -> item.getName().equals(sourceItem.getName())).findFirst().get();
-           Item sameNameTargetItem = targetInventory.getItemList().stream()
-                   .filter(item -> item.getName().equals(targetItem.getName())).findFirst().get();
-
-           
-
+    public void removeQuantity(Integer inventoryId, String itemName, int toRemoveQuantity) {
+       if (findById(inventoryId).isPresent()) {
+           try {
+               Item existentItem = findById(inventoryId)
+                       .get()
+                       .getItemList()
+                       .stream()
+                       .filter(item -> item.getName().equals(itemName))
+                       .findFirst()
+                       .get();
+               int currentQuantity = existentItem.getQuantity();
+               existentItem.setQuantity(currentQuantity - toRemoveQuantity);
+           } catch (NoSuchElementException ignored) {}
        }
     }
 }

@@ -1,6 +1,5 @@
 package org.example.usecase;
 
-import org.example.model.Inventory;
 import org.example.model.Item;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
@@ -8,9 +7,6 @@ import org.example.rules.TradeFailureException;
 import org.example.rules.TradeRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TradeUseCase {
@@ -24,17 +20,14 @@ public class TradeUseCase {
     }
 
     public void handle(Integer sourceInventoryId, Item sourceTradeItem, Integer targetInventoryId, Item targetTradeItem) throws TradeFailureException {
-        List<Item> checkedTradeItems = new TradeRules(inventoryRepo, rebelRepo)
-                .check(sourceInventoryId, sourceTradeItem, targetInventoryId, targetTradeItem);
+        new TradeRules(inventoryRepo, rebelRepo).check(sourceInventoryId, sourceTradeItem, targetInventoryId, targetTradeItem);
 
-        Item sourceInventoryItem = checkedTradeItems.get(0);
-        Item targetInventoryItem = checkedTradeItems.get(1);
+        Item sourceInventoryItem = inventoryRepo.findItemByName(sourceInventoryId, sourceTradeItem.getName()).get();
+        Item targetInventoryItem = inventoryRepo.findItemByName(targetInventoryId, targetTradeItem.getName()).get();
 
-        sourceInventoryItem.setQuantity( sourceInventoryItem.getQuantity() - sourceTradeItem.getQuantity() );
-        targetInventoryItem.setQuantity( targetInventoryItem.getQuantity() - targetTradeItem.getQuantity() );
-
-        TradeTryWithDefault tryWithDefault = new TradeTryWithDefault();
-        tryWithDefault.trySetElseAdd( sourceInventory, targetTradeItem);
-        tryWithDefault.trySetElseAdd( targetInventory, sourceTradeItem);
+        inventoryRepo.removeQuantity(sourceInventoryId, sourceTradeItem.getName(), sourceTradeItem.getQuantity());
+        inventoryRepo.removeQuantity(targetInventoryId, targetTradeItem.getName(), targetTradeItem.getQuantity());
+        inventoryRepo.addQuantity(sourceInventoryId, sourceTradeItem);
+        inventoryRepo.addQuantity(targetInventoryId, targetTradeItem);
     }
 }

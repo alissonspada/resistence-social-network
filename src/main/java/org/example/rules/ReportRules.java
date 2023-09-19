@@ -2,8 +2,6 @@ package org.example.rules;
 
 import org.example.repositories.RebelRepository;
 
-import java.util.UUID;
-
 public class ReportRules {
     private final RebelRepository rebelRepo;
 
@@ -11,11 +9,9 @@ public class ReportRules {
         this.rebelRepo = rebelRepo;
     }
 
-    public String handle(UUID sourceId, UUID targetId) {
-        if (!rebelRepo.existsById(sourceId)) return "source not found";
-        if (!rebelRepo.existsById(targetId)) return "target not found";
-        if (rebelRepo.findById(sourceId).get().getReportedRebels().contains(targetId)) return "rebel already reported";
-
-        return "";
+    public void handle(Integer sourceId, Integer targetId) throws Exception {
+        if (!rebelRepo.existsById(sourceId)) throw new Exception("source rebel not found") ;
+        if (!rebelRepo.existsById(targetId)) throw new Exception("target rebel not found");
+        if (rebelRepo.findById(sourceId).get().getReportedRebels().contains(targetId)) throw new Exception("rebel already reported") ;
     }
 }

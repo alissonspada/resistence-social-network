@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DisplayAveragesUseCaseTest {
+class ItemAveragesPerRebelUseCaseTest {
 
     private final InventoryRepository inventoryRepo = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
@@ -31,9 +31,9 @@ class DisplayAveragesUseCaseTest {
         rebelRepo.save(leia);
         inventoryRepo.save(lukeInv);
         inventoryRepo.save(leiaInv);
-        DisplayAveragesUseCase displayAveragesUseCase = new DisplayAveragesUseCase(inventoryRepo);
+        ItemAveragesPerRebelUseCase itemAveragesPerRebelUseCase = new ItemAveragesPerRebelUseCase(inventoryRepo);
         String expectedAverages = "doritos " + "1 " + "water " + "0 ";
-        String actualAverages = displayAveragesUseCase.handle();
+        String actualAverages = itemAveragesPerRebelUseCase.handle();
         assertEquals(expectedAverages, actualAverages);
     }
 

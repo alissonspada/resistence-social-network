@@ -6,11 +6,6 @@ import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 public class TradeRules {
     private final InventoryRepository inventoryRepo;
     private final RebelRepository rebelRepo;
@@ -19,7 +14,7 @@ public class TradeRules {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;
     }
-    public List<Item> check(Integer sourceInventoryId, Item sourceTrade, Integer targetInventoryId, Item targetTrade) throws TradeFailureException {
+    public void check(Integer sourceInventoryId, Item sourceTrade, Integer targetInventoryId, Item targetTrade) throws TradeFailureException {
         Inventory sourceInventory = inventoryRepo.findById(sourceInventoryId).orElseThrow(
                 () -> new TradeFailureException("source inventory not found")
         );
@@ -46,7 +41,5 @@ public class TradeRules {
 
         if (sourceItem.getQuantity() < sourceTrade.getQuantity()) throw new TradeFailureException("insufficient funds source");
         else if (targetItem.getQuantity() < targetTrade.getQuantity()) throw new TradeFailureException("insufficient funds target");
-
-        return new ArrayList<>(Arrays.asList(sourceItem, targetItem));
     }
 }

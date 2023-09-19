@@ -4,15 +4,18 @@ import org.example.model.Rebel;
 import org.example.repositories.RebelRepository;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class DisplayPercentageUseCase {
+public class AlliesTraitorsPercentagesUseCase {
     private final RebelRepository rebelRepository;
 
-    public DisplayPercentageUseCase(RebelRepository rebelRepository) {
+    public AlliesTraitorsPercentagesUseCase(RebelRepository rebelRepository) {
         this.rebelRepository = rebelRepository;
     }
 
-    public String handle(){
+    public List<String> handle(){
         double allIndividuals = rebelRepository.findAll().size();
         double traitors = rebelRepository.findAll().stream().filter(Rebel::isTraitor).count();
         double traitorsDecimal = traitors / allIndividuals;
@@ -21,6 +24,6 @@ public class DisplayPercentageUseCase {
         String traitorPercentage = numberFormat.format(traitorsDecimal);
         String alliesPercentage = numberFormat.format(alliesDecimal);
 
-        return "Allies: " + alliesPercentage + " " + "Traitors: " + traitorPercentage;
+        return new ArrayList<>(Arrays.asList(alliesPercentage, traitorPercentage));
     }
 }

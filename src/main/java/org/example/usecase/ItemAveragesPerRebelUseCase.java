@@ -2,15 +2,19 @@ package org.example.usecase;
 
 import org.example.model.Item;
 import org.example.repositories.InventoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DisplayAveragesUseCase {
+@Service
+public class ItemAveragesPerRebelUseCase {
     private final InventoryRepository inventoryRepository;
 
-    public DisplayAveragesUseCase(InventoryRepository inventoryRepository) {
+    @Autowired
+    public ItemAveragesPerRebelUseCase(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
 
@@ -18,13 +22,11 @@ public class DisplayAveragesUseCase {
         List<Item> allItems = inventoryRepository.findAll().stream().flatMap(inv -> inv.getItemList().stream()).toList();
         Map<String, Integer> totalEach = new HashMap<>();
         StringBuilder result = new StringBuilder();
+
         for (Item i : allItems) {
-            totalEach.put(i.getName(), totalEach.getOrDefault(i.getName(), 0) + i.getQuantity());
-        }
-        for (Map.Entry<String, Integer> entry : totalEach.entrySet()) {
-            Integer average = entry.getValue() / inventoryRepository.findAll().size();
-            totalEach.put(entry.getKey(), average);
-            result.append(entry.getKey()).append(" ").append(average).append(" ");
+            int totalAmountItem = totalEach.getOrDefault(i.getName(), 0) + i.getQuantity();
+            totalEach.put(i.getName(), totalAmountItem);
+            Integer average = totalAmountItem / inventoryRepository.findAll().size();
         }
         return result.toString();
     }

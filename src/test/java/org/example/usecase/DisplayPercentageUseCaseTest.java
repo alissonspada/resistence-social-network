@@ -13,7 +13,7 @@ class DisplayPercentageUseCaseTest {
     @Test
     void should_return_percentages_string() {
         rebelRepo.save(new Rebel("luke", 28, "male"));
-        DisplayPercentageUseCase displayPercentageUseCase = new DisplayPercentageUseCase(rebelRepo);
+        AlliesTraitorsPercentagesUseCase displayPercentageUseCase = new AlliesTraitorsPercentagesUseCase(rebelRepo);
         String actualPercentages = displayPercentageUseCase.handle();
         String expectedPercentages = "Allies: 100% Traitors: 0%";
         assertEquals(expectedPercentages, actualPercentages);
