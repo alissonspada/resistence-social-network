@@ -2,22 +2,27 @@ package org.example.rules;
 
 import org.example.model.Location;
 import org.example.repositories.LocationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
 public class LocationUpdateRules {
     private final LocationRepository locationRepo;
+    private final GenericRules genericRules = new GenericRules();
 
+    @Autowired
     public LocationUpdateRules(LocationRepository locationRepo) {
         this.locationRepo = locationRepo;
     }
 
-    public Location handle(Integer locationId, Location newLocation) {
-        Location oldLocation = locationRepo.findById(locationId).orElse(null);
+    public Optional<Location> handle(Integer locationId, Location newLocation) {
+        Optional<Location> oldLocation = locationRepo.findById(locationId);
 
-        if (oldLocation == null) return new Location();
+        if (oldLocation.isEmpty()) return Optional.empty();
 
-        GenericRules genericRules = new GenericRules();
-
-        oldLocation.setNewLocation(
+        oldLocation.get().setNewLocation(
                 genericRules.handle(newLocation.getLatitude(), 90),
                 genericRules.handle(newLocation.getLongitude(), 180),
                 genericRules.handle(newLocation.getBase())

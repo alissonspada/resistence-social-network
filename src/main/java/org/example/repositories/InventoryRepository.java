@@ -5,7 +5,6 @@ import org.example.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
@@ -31,23 +30,23 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
                 sameNameItem.setQuantity(currentQuantity + extraQuantity);
             } catch (Exception e) {
                 inventory.getItemList().add(tradeItem);
+                this.save(inventory);
             }
         }
     }
 
     default void removeQuantity(Integer inventoryId, String itemName, int toRemoveQuantity) {
        if (findById(inventoryId).isPresent()) {
-           try {
-               Item existentItem = findById(inventoryId)
-                       .get()
-                       .getItemList()
-                       .stream()
-                       .filter(item -> item.getName().equals(itemName))
-                       .findFirst()
-                       .get();
-               int currentQuantity = existentItem.getQuantity();
-               existentItem.setQuantity(currentQuantity - toRemoveQuantity);
-           } catch (NoSuchElementException ignored) {}
+           Item existentItem = findById(inventoryId)
+                   .get()
+                   .getItemList()
+                   .stream()
+                   .filter(item -> item.getName().equals(itemName))
+                   .findFirst()
+                   .orElseThrow();
+           int currentQuantity = existentItem.getQuantity();
+           existentItem.setQuantity(currentQuantity - toRemoveQuantity);
+           this.save(this.findById(inventoryId).get());
        }
     }
 }

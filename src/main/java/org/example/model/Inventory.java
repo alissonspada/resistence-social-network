@@ -13,7 +13,7 @@ public class Inventory {
     @JoinColumn(name = "rebel_id")
     private Rebel rebel;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "item_list_id")
     private List<Item> itemList;
 

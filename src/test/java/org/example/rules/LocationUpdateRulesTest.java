@@ -1,41 +1,33 @@
 package org.example.rules;
 
 import org.example.model.Location;
-import org.example.model.Rebel;
 import org.example.repositories.LocationRepository;
-import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 class LocationUpdateRulesTest {
     @Autowired
-    private RebelRepository rebelRepo;
-    @Autowired
     private LocationRepository locationRepo;
+    @Autowired
+    private LocationUpdateRules locationUpdateRules;
 
     @Test
-    void should_throw_NoSuchElementException_when_rebel_not_found() {
-        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
-        Exception e = assertThrows(NoSuchElementException.class, () ->
-                locationUpdateRules.handle(0, new Location())
-        );
-        assertTrue(e.getMessage().contains("rebel not found"));
+    void should_do_nothing_when_rebel_not_found() {
+        Location probeLocation = new Location();
+        locationUpdateRules.handle(45, probeLocation);
+        assertFalse(locationRepo.findAll().contains(probeLocation));
     }
 
     @Test
-    void should_return_new_location() {
-        Rebel rebel = new Rebel("luke", 18, "male");
-        rebelRepo.save(rebel);
-        locationRepo.save(new Location(53.53, 41.665, "joao"));
-        LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
+    void should_save_new_location() {
         Location expectedLocation = new Location(42.1, 22.5, "base");
-        Location returnedLocation = locationUpdateRules.handle(rebel.getId(), expectedLocation);
-        assertEquals(expectedLocation.toString(), returnedLocation.toString());
+        Location joaoLocation = locationRepo.save(expectedLocation);
+        Location actualLocation = locationRepo.findById(joaoLocation.getId()).get();
+        assertEquals(expectedLocation.toString(), actualLocation.toString());
     }
 }

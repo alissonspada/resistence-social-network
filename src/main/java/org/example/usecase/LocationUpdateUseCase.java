@@ -9,18 +9,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationUpdateUseCase {
     private final LocationRepository locationRepository;
+    private final LocationUpdateRules locationUpdateRules;
 
     @Autowired
-    public LocationUpdateUseCase(LocationRepository locationRepository) {
+    public LocationUpdateUseCase(LocationRepository locationRepository, LocationUpdateRules locationUpdateRules) {
         this.locationRepository = locationRepository;
+        this.locationUpdateRules = locationUpdateRules;
     }
 
-    public String handle(Integer locationId, Location newLocation) {
-        Location formattedNewLocation = new LocationUpdateRules(locationRepository).handle(locationId, newLocation);
+    public void handle(Integer locationId, Location newLocation) {
+        Location formattedNewLocation = locationUpdateRules.handle(locationId, newLocation).get();
 
         if (formattedNewLocation.getLatitude() != null) {
-            return "Location updated to: \n" + formattedNewLocation;
+            locationRepository.save(formattedNewLocation);
         }
-        return "Location update failed because location could not be found";
     }
 }

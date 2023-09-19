@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class TradeUseCaseTest {
     @Autowired
     private RebelRepository rebelRepository;
@@ -30,7 +29,7 @@ class TradeUseCaseTest {
     private TradeUseCase tradeUseCase;
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(new ArrayList<>( List.of( new Item("doritos", 2, 1)) ));
+    private final Inventory lukeInv = new Inventory(new ArrayList<>( List.of( new Item("doritos", 3, 1)) ));
     private final Inventory leiaInv = new Inventory(new ArrayList<>( List.of( new Item("water", 1, 2)) ));
 
     @BeforeEach
@@ -42,15 +41,16 @@ class TradeUseCaseTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void should_add_to_list_when_no_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
 
-        tradeUseCase.handle(1, new Item("doritos", 2, 1),
-                leiaInv.getId(), addedItem);
+        tradeUseCase.handle(1, new Item("doritos", 2, 1), 2, addedItem);
         assertTrue(inventoryRepository.findById(1).orElseThrow().getItemList().contains(addedItem));
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void should_set_quantity_when_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
         lukeInv.getItemList().add(new Item("water", 2, 1));

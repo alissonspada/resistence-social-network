@@ -5,11 +5,15 @@ import org.example.model.Item;
 import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TradeRules {
     private final InventoryRepository inventoryRepo;
     private final RebelRepository rebelRepo;
 
+    @Autowired
     public TradeRules(InventoryRepository inventoryRepo, RebelRepository rebelRepo) {
         this.inventoryRepo = inventoryRepo;
         this.rebelRepo = rebelRepo;
