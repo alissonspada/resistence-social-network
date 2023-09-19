@@ -18,12 +18,8 @@ class TradeRulesTest {
     private final InventoryRepository inventoryRepository = new InventoryRepository();
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
-    private final Inventory lukeInv = new Inventory(luke.getEntityId(),
-            new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
-    );
-    private final Inventory leiaInv = new Inventory(leia.getEntityId(),
-            new ArrayList<>( List.of( new Item("water", 1, 2)) )
-    );
+    private final Inventory lukeInv = new Inventory(new ArrayList<>( List.of( new Item("doritos", 2, 1)) ));
+    private final Inventory leiaInv = new Inventory(new ArrayList<>( List.of( new Item("water", 1, 2)) ));
     private final TradeRules tradeRules = new TradeRules(inventoryRepository, rebelRepository);
 
     @BeforeEach

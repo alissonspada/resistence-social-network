@@ -7,7 +7,6 @@ import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +19,7 @@ class LocationUpdateRulesTest {
     void should_throw_NoSuchElementException_when_rebel_not_found() {
         LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
         Exception e = assertThrows(NoSuchElementException.class, () ->
-                locationUpdateRules.handle(UUID.randomUUID(), new Location())
+                locationUpdateRules.handle(0, new Location())
         );
         assertTrue(e.getMessage().contains("rebel not found"));
     }

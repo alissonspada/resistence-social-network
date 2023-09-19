@@ -6,8 +6,6 @@ import org.example.rules.LocationUpdateRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class LocationUpdateUseCase {
     private final LocationRepository locationRepository;
@@ -17,7 +15,7 @@ public class LocationUpdateUseCase {
         this.locationRepository = locationRepository;
     }
 
-    public String handle(UUID locationId, Location newLocation) {
+    public String handle(Integer locationId, Location newLocation) {
         Location formattedNewLocation = new LocationUpdateRules(locationRepository).handle(locationId, newLocation);
 
         if (formattedNewLocation.getLatitude() != null) {

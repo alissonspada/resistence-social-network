@@ -3,8 +3,6 @@ package org.example.rules;
 import org.example.model.Location;
 import org.example.repositories.LocationRepository;
 
-import java.util.UUID;
-
 public class LocationUpdateRules {
     private final LocationRepository locationRepo;
 
@@ -12,7 +10,7 @@ public class LocationUpdateRules {
         this.locationRepo = locationRepo;
     }
 
-    public Location handle(UUID locationId, Location newLocation) {
+    public Location handle(Integer locationId, Location newLocation) {
         Location oldLocation = locationRepo.findById(locationId).orElse(null);
 
         if (oldLocation == null) return new Location();

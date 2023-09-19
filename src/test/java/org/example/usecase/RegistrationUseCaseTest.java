@@ -28,14 +28,9 @@ class RegistrationUseCaseTest {
     private final Location lukeLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location leiaLocation = new Location(0.2, 21.3, "base/galaxy");
     private final Location hanSoloLocation = new Location(24.1, 42.1, "base");
-    private final Inventory lukeInv = new Inventory(luke.getEntityId(),
-                new ArrayList<>( List.of( new Item("doritos", 2, 1)) )
-            );
-    private final Inventory leiaInv = new Inventory(leia.getEntityId(),
-                new ArrayList<>( List.of( new Item("water", 1, 2)) )
-            );
-    private final Inventory hanSoloInventory = new Inventory(hanSolo.getEntityId(),
-                new ArrayList<>(Arrays.asList(( new Item("doritos", 2, 1)),
+    private final Inventory lukeInv = new Inventory(new ArrayList<>( List.of( new Item("doritos", 2, 1)) ));
+    private final Inventory leiaInv = new Inventory(new ArrayList<>( List.of( new Item("water", 1, 2)) ));
+    private final Inventory hanSoloInventory = new Inventory(new ArrayList<>(Arrays.asList(( new Item("doritos", 2, 1)),
             new Item("doritos", 20, 1))
             ));
     private final RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepo, locationRepo, inventoryRepo);

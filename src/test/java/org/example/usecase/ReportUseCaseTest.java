@@ -10,7 +10,7 @@ public class ReportUseCaseTest {
     private final ReportUseCase reportUseCase = new ReportUseCase(rebelRepository);
 
     @Test
-    void should_report_a_rebel() {
+    void should_report_a_rebel() throws Exception {
 
         Rebel addRebel1 = new Rebel("zezinho",1,"masculino");
         Rebel addRebel2 = new Rebel("pedrinho",1,"feminino");
