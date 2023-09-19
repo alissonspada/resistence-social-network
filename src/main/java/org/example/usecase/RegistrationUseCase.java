@@ -8,14 +8,18 @@ import org.example.repositories.InventoryRepository;
 import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 import org.example.rules.RegistrationRules;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RegistrationUseCase {
     private final RebelRepository rebelRepo;
     private final LocationRepository locationRepo;
     private final InventoryRepository inventoryRepo;
 
+    @Autowired
     public RegistrationUseCase(RebelRepository rebelRepo, LocationRepository locationRepo, InventoryRepository inventoryRepo) {
         this.rebelRepo = rebelRepo;
         this.locationRepo = locationRepo;

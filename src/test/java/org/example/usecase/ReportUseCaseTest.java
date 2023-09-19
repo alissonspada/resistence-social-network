@@ -4,10 +4,13 @@ import org.example.model.Rebel;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ReportUseCaseTest {
-    private final RebelRepository rebelRepository = new RebelRepository();
-    private final ReportUseCase reportUseCase = new ReportUseCase(rebelRepository);
+    @Autowired
+    private RebelRepository rebelRepository;
+    @Autowired
+    private ReportUseCase reportUseCase;
 
     @Test
     void should_report_a_rebel() throws Exception {

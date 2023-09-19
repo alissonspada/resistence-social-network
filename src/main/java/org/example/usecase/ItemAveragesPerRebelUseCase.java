@@ -18,16 +18,17 @@ public class ItemAveragesPerRebelUseCase {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public String handle() {
+    public Map<String, Integer> handle() {
         List<Item> allItems = inventoryRepository.findAll().stream().flatMap(inv -> inv.getItemList().stream()).toList();
         Map<String, Integer> totalEach = new HashMap<>();
-        StringBuilder result = new StringBuilder();
+        Map<String, Integer> averagesAllItems = new HashMap<>();
 
         for (Item i : allItems) {
             int totalAmountItem = totalEach.getOrDefault(i.getName(), 0) + i.getQuantity();
             totalEach.put(i.getName(), totalAmountItem);
             Integer average = totalAmountItem / inventoryRepository.findAll().size();
+            averagesAllItems.put(i.getName(), average);
         }
-        return result.toString();
+        return averagesAllItems;
     }
 }

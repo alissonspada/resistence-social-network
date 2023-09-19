@@ -2,15 +2,19 @@ package org.example.usecase;
 
 import org.example.model.Rebel;
 import org.example.repositories.RebelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class AlliesTraitorsPercentagesUseCase {
-    private final RebelRepository rebelRepository;
 
+    private final RebelRepository rebelRepository;
+    @Autowired
     public AlliesTraitorsPercentagesUseCase(RebelRepository rebelRepository) {
         this.rebelRepository = rebelRepository;
     }

@@ -8,7 +8,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InventoryRepositoryTest {
-
     @Test
     void findItemByName_should_return_Optional_Empty_when_item_not_found() {
         InventoryRepository inventoryRepo = new InventoryRepository();

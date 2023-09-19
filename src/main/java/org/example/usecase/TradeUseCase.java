@@ -22,9 +22,6 @@ public class TradeUseCase {
     public void handle(Integer sourceInventoryId, Item sourceTradeItem, Integer targetInventoryId, Item targetTradeItem) throws TradeFailureException {
         new TradeRules(inventoryRepo, rebelRepo).check(sourceInventoryId, sourceTradeItem, targetInventoryId, targetTradeItem);
 
-        Item sourceInventoryItem = inventoryRepo.findItemByName(sourceInventoryId, sourceTradeItem.getName()).get();
-        Item targetInventoryItem = inventoryRepo.findItemByName(targetInventoryId, targetTradeItem.getName()).get();
-
         inventoryRepo.removeQuantity(sourceInventoryId, sourceTradeItem.getName(), sourceTradeItem.getQuantity());
         inventoryRepo.removeQuantity(targetInventoryId, targetTradeItem.getName(), targetTradeItem.getQuantity());
         inventoryRepo.addQuantity(sourceInventoryId, sourceTradeItem);

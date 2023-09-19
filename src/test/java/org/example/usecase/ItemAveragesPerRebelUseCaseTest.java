@@ -6,15 +6,19 @@ import org.example.model.Rebel;
 import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemAveragesPerRebelUseCaseTest {
 
-    private final InventoryRepository inventoryRepo = new InventoryRepository();
+    @Autowired
+    private InventoryRepository inventoryRepo;
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
     private final Inventory lukeInv = new Inventory(new ArrayList<>( List.of( new Item("doritos", 2, 1)) ));
@@ -27,10 +31,13 @@ class ItemAveragesPerRebelUseCaseTest {
         rebelRepo.save(leia);
         inventoryRepo.save(lukeInv);
         inventoryRepo.save(leiaInv);
+
         ItemAveragesPerRebelUseCase itemAveragesPerRebelUseCase = new ItemAveragesPerRebelUseCase(inventoryRepo);
-        String expectedAverages = "doritos " + "1 " + "water " + "0 ";
-        String actualAverages = itemAveragesPerRebelUseCase.handle();
-        assertEquals(expectedAverages, actualAverages);
+        Map<String, Integer> expectedAverages = new HashMap<>();
+        expectedAverages.put("doritos", 1);
+        expectedAverages.put("water", 0);
+        Map<String, Integer> actualAverages = itemAveragesPerRebelUseCase.handle();
+        assertEquals(expectedAverages.toString(), actualAverages.toString());
     }
 
 }

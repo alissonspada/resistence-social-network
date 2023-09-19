@@ -9,6 +9,7 @@ import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,9 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RegistrationUseCaseTest {
-    private final RebelRepository rebelRepo = new RebelRepository();
-    private final InventoryRepository inventoryRepo = new InventoryRepository();
-    private final LocationRepository locationRepo = new LocationRepository();
+    @Autowired
+    private RebelRepository rebelRepo;
+    @Autowired
+    private InventoryRepository inventoryRepo;
+    @Autowired
+    private LocationRepository locationRepo;
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
     private final Rebel hanSolo = new Rebel("han solo", 18, "male");

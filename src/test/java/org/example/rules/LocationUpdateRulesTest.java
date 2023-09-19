@@ -5,15 +5,17 @@ import org.example.model.Rebel;
 import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LocationUpdateRulesTest {
-
-    private final RebelRepository rebelRepo = new RebelRepository();
-    private final LocationRepository locationRepo = new LocationRepository();
+    @Autowired
+    private RebelRepository rebelRepo;
+    @Autowired
+    private LocationRepository locationRepo;
 
     @Test
     void should_throw_NoSuchElementException_when_rebel_not_found() {

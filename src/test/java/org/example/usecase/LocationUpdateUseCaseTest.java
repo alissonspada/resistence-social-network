@@ -6,10 +6,12 @@ import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class LocationUpdateUseCaseTest {
 
-    LocationRepository locationRepository = new LocationRepository();
+    @Autowired
+    LocationRepository locationRepository;
     RebelRepository rebelRepository = new RebelRepository();
     LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(locationRepository);
 
