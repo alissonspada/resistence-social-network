@@ -17,7 +17,6 @@ public class ItemAveragesPerRebelUseCase {
     public ItemAveragesPerRebelUseCase(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
-
     public Map<String, Integer> handle() {
         List<Item> allItems = inventoryRepository.findAll().stream().flatMap(inv -> inv.getItemList().stream()).toList();
         Map<String, Integer> totalEach = new HashMap<>();
