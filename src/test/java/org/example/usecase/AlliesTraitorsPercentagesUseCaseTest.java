@@ -4,6 +4,7 @@ import org.example.model.Rebel;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class AlliesTraitorsPercentagesUseCaseTest {
 
     @Autowired

@@ -1,4 +1,4 @@
 package org.example.request;
 
-public record RequestReport(String sourceName, String targetName) {
+public record RequestReport(Integer sourceId, Integer targetId) {
 }

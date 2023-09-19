@@ -7,6 +7,7 @@ import org.example.repositories.InventoryRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +16,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 class ItemAveragesPerRebelUseCaseTest {
-
     @Autowired
     private InventoryRepository inventoryRepo;
     private final Rebel luke = new Rebel("luke", 18, "male");

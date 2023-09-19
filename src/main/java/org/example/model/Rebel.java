@@ -2,19 +2,26 @@ package org.example.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.example.repositories.GenericEntity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Rebel extends GenericEntity {
+public class Rebel {
     @Id
     private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer reportCounter = 0;
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+    @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
     private final List<Integer> reportedRebels = new ArrayList<>();
 
     public Rebel(String name, Integer age, String gender) {
@@ -25,6 +32,15 @@ public class Rebel extends GenericEntity {
 
     public Rebel() {
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setReportCounter(Integer reportCounter) {
+        this.reportCounter = reportCounter;
+    }
+
     public void setName(String newName) {
         name = newName;
     }
@@ -66,14 +82,8 @@ public class Rebel extends GenericEntity {
         return gender;
     }
 
-    @Override
-    public Integer getEntityId() {
+    public Integer getId() {
         return id;
-    }
-
-    @Override
-    public void setEntityId(Integer id) {
-        this.id = id;
     }
 
     @Override

@@ -2,13 +2,11 @@ package org.example.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.example.repositories.GenericEntity;
 
 @Entity
-public class Location extends GenericEntity {
+public class Location {
     @Id
     private Integer id;
-    private Integer ownerId;
     private Double latitude;
     private Double longitude;
     private String base;
@@ -26,12 +24,6 @@ public class Location extends GenericEntity {
         this.latitude = newLatitude;
         this.longitude = newLongitude;
         this.base = newBase;
-    }
-
-
-    public Integer getOwnerId() { return ownerId; }
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
     }
 
     public Double getLatitude() {
@@ -56,14 +48,12 @@ public class Location extends GenericEntity {
         base = newBase;
     }
 
-    @Override
-    public Integer getEntityId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    @Override
-    public void setEntityId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     @Override

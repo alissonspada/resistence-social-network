@@ -10,6 +10,7 @@ import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+@SpringBootTest
 class RegistrationUseCaseTest {
     @Autowired
     private RebelRepository rebelRepo;
@@ -47,17 +49,17 @@ class RegistrationUseCaseTest {
 
     @Test
     void should_save_rebel() {
-        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getEntityId()));
+        assertNotEquals(Optional.empty(), rebelRepo.findById(luke.getId()));
     }
 
     @Test
     void should_save_location() {
-        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getEntityId()));
+        assertNotEquals(Optional.empty(), locationRepo.findById(lukeLocation.getId()));
     }
 
     @Test
     void should_save_inventory() {
-        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getEntityId()));
+        assertNotEquals(Optional.empty(), inventoryRepo.findById(lukeInv.getId()));
     }
 
     @Test
@@ -67,6 +69,6 @@ class RegistrationUseCaseTest {
                         new Item("doritos", 20, 1))
                 );
         registrationUseCase.handle(hanSolo, hanSoloLocation, hanSoloInventory);
-        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getEntityId()).orElseThrow().getItemList().toString());
+        assertEquals(expectedInventoryList.toString(), inventoryRepo.findById(hanSoloInventory.getId()).orElseThrow().getItemList().toString());
     }
 }

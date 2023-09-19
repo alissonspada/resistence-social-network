@@ -6,11 +6,13 @@ import org.example.repositories.LocationRepository;
 import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class LocationUpdateRulesTest {
     @Autowired
     private RebelRepository rebelRepo;
@@ -33,7 +35,7 @@ class LocationUpdateRulesTest {
         locationRepo.save(new Location(53.53, 41.665, "joao"));
         LocationUpdateRules locationUpdateRules = new LocationUpdateRules(locationRepo);
         Location expectedLocation = new Location(42.1, 22.5, "base");
-        Location returnedLocation = locationUpdateRules.handle(rebel.getEntityId(), expectedLocation);
+        Location returnedLocation = locationUpdateRules.handle(rebel.getId(), expectedLocation);
         assertEquals(expectedLocation.toString(), returnedLocation.toString());
     }
 }

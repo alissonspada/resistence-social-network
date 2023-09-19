@@ -7,7 +7,9 @@ import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class LocationUpdateUseCaseTest {
 
     @Autowired
@@ -22,7 +24,7 @@ public class LocationUpdateUseCaseTest {
         locationRepository.save(location);
         rebelRepository.save(rebel);
         Location newLocation = new Location(90.0,30.2,"manjuba");
-        locationUpdateUseCase.handle(location.getEntityId(), newLocation);
-        Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getEntityId()).orElseThrow().toString());
+        locationUpdateUseCase.handle(location.getId(), newLocation);
+        Assertions.assertEquals(newLocation.toString(), locationRepository.findById(location.getId()).orElseThrow().toString());
     }
 }

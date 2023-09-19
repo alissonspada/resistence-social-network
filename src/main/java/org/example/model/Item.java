@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Item {
+    private Integer id;
     private String name;
     private Integer price;
     private Integer quantity;

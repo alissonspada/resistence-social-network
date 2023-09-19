@@ -5,7 +5,9 @@ import org.example.repositories.RebelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class ReportUseCaseTest {
     @Autowired
     private RebelRepository rebelRepository;
@@ -20,8 +22,8 @@ public class ReportUseCaseTest {
         rebelRepository.save(addRebel1);
         rebelRepository.save(addRebel2);
 
-        reportUseCase.handle(addRebel1.getEntityId(), addRebel2.getEntityId());
-        Assertions.assertEquals(1, (int) rebelRepository.findById(addRebel2.getEntityId()).orElseThrow().getReportCounter());
+        reportUseCase.handle(addRebel1.getId(), addRebel2.getId());
+        Assertions.assertEquals(1, (int) rebelRepository.findById(addRebel2.getId()).orElseThrow().getReportCounter());
     }
 
 }

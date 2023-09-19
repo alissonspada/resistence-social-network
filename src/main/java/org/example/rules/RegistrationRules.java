@@ -4,14 +4,13 @@ import org.example.model.Inventory;
 import org.example.model.Item;
 import org.example.model.Location;
 import org.example.model.Rebel;
-import org.example.repositories.GenericEntity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class RegistrationRules {
-    public List<GenericEntity> format(Rebel rebel, Location location, Inventory inventory) {
+    public List<?> format(Rebel rebel, Location location, Inventory inventory) {
         GenericRules genericRules = new GenericRules();
 
         rebel.setName(genericRules.handle(rebel.getName()));
