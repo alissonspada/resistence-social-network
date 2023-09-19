@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class TradeUseCaseTest {
     @Autowired
     private RebelRepository rebelRepository;
@@ -35,10 +35,8 @@ class TradeUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        rebelRepository.deleteAll();
         rebelRepository.save(luke);
         rebelRepository.save(leia);
-        inventoryRepository.deleteAll();
         inventoryRepository.save(lukeInv);
         inventoryRepository.save(leiaInv);
     }
@@ -46,9 +44,10 @@ class TradeUseCaseTest {
     @Test
     void should_add_to_list_when_no_same_name_item() throws TradeFailureException {
         Item addedItem = new Item("water", 1, 2);
-        tradeUseCase.handle(lukeInv.getId(), new Item("doritos", 2, 1),
+
+        tradeUseCase.handle(1, new Item("doritos", 2, 1),
                 leiaInv.getId(), addedItem);
-        assertTrue(inventoryRepository.findById(lukeInv.getId()).orElseThrow().getItemList().contains(addedItem));
+        assertTrue(inventoryRepository.findById(1).orElseThrow().getItemList().contains(addedItem));
     }
 
     @Test

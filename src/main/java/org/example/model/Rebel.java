@@ -1,24 +1,23 @@
 package org.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Rebel {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer reportCounter = 0;
+
     @OneToOne
     @JoinColumn(name = "location_id")
     private Location location;
+
     @OneToOne
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
@@ -32,7 +31,7 @@ public class Rebel {
 
     public Rebel() {
     }
-
+    public Inventory getInventory() { return inventory; }
     public void setId(Integer id) {
         this.id = id;
     }

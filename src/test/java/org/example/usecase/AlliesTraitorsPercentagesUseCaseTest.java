@@ -25,7 +25,6 @@ class AlliesTraitorsPercentagesUseCaseTest {
     void should_return_percentages_string() {
         rebelRepo.save(new Rebel("luke", 28, "male"));
 
-        alliesTraitorsPercentagesUseCase = new AlliesTraitorsPercentagesUseCase(rebelRepo);
         List<String> actualPercentages = alliesTraitorsPercentagesUseCase.handle();
 
         NumberFormat percentagesFormat = NumberFormat.getPercentInstance();

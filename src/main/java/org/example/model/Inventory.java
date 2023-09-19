@@ -1,19 +1,25 @@
 package org.example.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Inventory {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @OneToOne
+    @JoinColumn(name = "rebel_id")
+    private Rebel rebel;
+
     @OneToMany
     @JoinColumn(name = "item_list_id")
     private List<Item> itemList;
+
+    @OneToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     public Inventory(List<Item> itemList) {
         this.itemList = itemList;

@@ -28,6 +28,8 @@ class RegistrationUseCaseTest {
     private InventoryRepository inventoryRepo;
     @Autowired
     private LocationRepository locationRepo;
+    @Autowired
+    private RegistrationUseCase registrationUseCase;
     private final Rebel luke = new Rebel("luke", 18, "male");
     private final Rebel leia = new Rebel("leia", 30, "female");
     private final Rebel hanSolo = new Rebel("han solo", 18, "male");
@@ -39,7 +41,6 @@ class RegistrationUseCaseTest {
     private final Inventory hanSoloInventory = new Inventory(new ArrayList<>(Arrays.asList(( new Item("doritos", 2, 1)),
             new Item("doritos", 20, 1))
             ));
-    private final RegistrationUseCase registrationUseCase = new RegistrationUseCase(rebelRepo, locationRepo, inventoryRepo);
 
     @BeforeEach
     public void setUp() {

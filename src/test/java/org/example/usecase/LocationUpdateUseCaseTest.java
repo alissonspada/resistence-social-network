@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class LocationUpdateUseCaseTest {
 
     @Autowired
-    LocationRepository locationRepository;
-    RebelRepository rebelRepository = new RebelRepository();
-    LocationUpdateUseCase locationUpdateUseCase = new LocationUpdateUseCase(locationRepository);
+    private LocationRepository locationRepository;
+    @Autowired
+    private RebelRepository rebelRepository;
+    @Autowired
+    private LocationUpdateUseCase locationUpdateUseCase;
 
     @Test
     void should_save_new_location(){

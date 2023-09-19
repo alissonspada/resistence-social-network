@@ -17,13 +17,14 @@ public class ReportUseCaseTest {
     @Test
     void should_report_a_rebel() throws Exception {
 
-        Rebel addRebel1 = new Rebel("zezinho",1,"masculino");
-        Rebel addRebel2 = new Rebel("pedrinho",1,"feminino");
-        rebelRepository.save(addRebel1);
-        rebelRepository.save(addRebel2);
+        Rebel rebel1 = new Rebel("zezinho",1,"masculino");
+        Rebel rebel2 = new Rebel("pedrinho",1,"feminino");
+        rebelRepository.save(rebel1);
+        rebelRepository.save(rebel2);
+        System.out.println(rebel1);
 
-        reportUseCase.handle(addRebel1.getId(), addRebel2.getId());
-        Assertions.assertEquals(1, (int) rebelRepository.findById(addRebel2.getId()).orElseThrow().getReportCounter());
+        reportUseCase.handle(rebel1.getId(), rebel2.getId());
+        Assertions.assertEquals(1, rebelRepository.findById(rebel2.getId()).orElseThrow().getReportCounter());
     }
 
 }
