@@ -30,9 +30,9 @@ public class RegistrationUseCase {
         List<?> data = registrationRules.format(rebel, location, inventory);
 
         Inventory fInventory = (Inventory) data.get(2);
-        fInventory.setOwnerId(rebel.getId());
+        fInventory.setId(rebel.getId());
         Location fLocation = (Location) data.get(1);
-        fLocation.setOwnerId(rebel.getId());
+        fLocation.setId(rebel.getId());
 
         rebelRepo.save((Rebel) data.get(0));
         locationRepo.save((Location) data.get(1));

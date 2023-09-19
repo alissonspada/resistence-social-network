@@ -22,10 +22,10 @@ public class TradeRules {
                 () -> new TradeFailureException("target inventory not found")
         );
 
-        rebelRepo.findById(sourceInventory.getOwnerId()).filter(Rebel::isNotTraitor).orElseThrow(
+        rebelRepo.findById(sourceInventory.getId()).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("source rebel is either a traitor or could not be found")
         );
-        rebelRepo.findById(targetInventory.getOwnerId()).filter(Rebel::isNotTraitor).orElseThrow(
+        rebelRepo.findById(targetInventory.getId()).filter(Rebel::isNotTraitor).orElseThrow(
                 () -> new TradeFailureException("target rebel is either a traitor or could not be found")
         );
 

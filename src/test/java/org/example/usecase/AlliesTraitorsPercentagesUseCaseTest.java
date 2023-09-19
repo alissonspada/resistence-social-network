@@ -18,12 +18,14 @@ class AlliesTraitorsPercentagesUseCaseTest {
 
     @Autowired
     private RebelRepository rebelRepo;
+    @Autowired
+    private AlliesTraitorsPercentagesUseCase alliesTraitorsPercentagesUseCase;
 
     @Test
     void should_return_percentages_string() {
         rebelRepo.save(new Rebel("luke", 28, "male"));
 
-        AlliesTraitorsPercentagesUseCase alliesTraitorsPercentagesUseCase = new AlliesTraitorsPercentagesUseCase(rebelRepo);
+        alliesTraitorsPercentagesUseCase = new AlliesTraitorsPercentagesUseCase(rebelRepo);
         List<String> actualPercentages = alliesTraitorsPercentagesUseCase.handle();
 
         NumberFormat percentagesFormat = NumberFormat.getPercentInstance();

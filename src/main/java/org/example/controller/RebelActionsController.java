@@ -46,20 +46,20 @@ public class RebelActionsController {
         return ResponseEntity.ok("Reported rebel " + ". reportedId= " + requestReport.targetId());
     }
 
-    @PatchMapping("/locationUpdate")
-    public ResponseEntity<String> handleLocationUpdate(@RequestBody RequestLocationUpdate requestLocationUpdate) {
-        Integer locationId;
-        try {
-            locationId = locationRepo
-                    .findById(rebelRepo.findByName(requestLocationUpdate.rebelName()).orElseThrow().getId())
-                    .orElseThrow()
-                    .getOwnerId();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("no such rebel");
-        }
-        String response = locationUpdateUseCase.handle(locationId, requestLocationUpdate.newLocation());
-        return ResponseEntity.ok(response);
-    }
+//    @PatchMapping("/locationUpdate")
+//    public ResponseEntity<String> handleLocationUpdate(@RequestBody RequestLocationUpdate requestLocationUpdate) {
+//        Integer locationId;
+//        try {
+//            locationId = locationRepo
+//                    .findById(rebelRepo.findByName(requestLocationUpdate.rebelName()).orElseThrow().getId())
+//                    .orElseThrow()
+//                    .getOwnerId();
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body("no such rebel");
+//        }
+//        String response = locationUpdateUseCase.handle(locationId, requestLocationUpdate.newLocation());
+//        return ResponseEntity.ok(response);
+//    }
 
 //    @PatchMapping("/trade")
 //    public ResponseEntity<String> handleTrade(@RequestBody RequestTrade requestTrade) {
